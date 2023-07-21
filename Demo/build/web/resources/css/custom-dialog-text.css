@@ -1,0 +1,13 @@
+/* Spesifik metin */
+.custom-dialog-text {
+    font-weight: bold; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 22px; /* Yazı boyutu */
+    padding-left: 80px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow: hidden;
+    /* Ortaya hizalama */
+}
+
+

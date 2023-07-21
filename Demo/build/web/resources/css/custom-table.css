@@ -1,0 +1,22 @@
+
+/* Tablo başlığı için */
+.ui-datatable thead th {
+    background-color: bisque ; /* Arka plan rengi */
+    padding: 10px;/* Yazı rengi */
+}
+
+/* Tablo içeriği için */
+.ui-datatable tbody td {
+    background-color:  blanchedalmond; /* Arka plan rengi */
+    padding: 10px;/* Yazı rengi */
+}
+
+/* İlgili stil sınıfını tabloya uygulamak için */
+.custom-table {
+    border: 2px   black;
+    border-radius: 50px;
+    padding-right: 100px;
+    padding-left: 100px;
+    /* Tablonun genişliğini ayarlar */
+}
+

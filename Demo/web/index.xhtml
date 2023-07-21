@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="myForm"> 
+            <p:growl id="messages" showDetail="true" /> 
+            <h:panelGrid columns="3" >
+            </h:panelGrid>   
+            <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
+                             background-color:antiquewhite ;" update=":myForm" action="#{personaController.goToPage()}"   />
+            <p:dataTable id="dtPersona" value="#{personaController.list}" var="p"  styleClass="custom-table" >
+
+                <p:column  headerText="NAME"  styleClass="custom-text">
+                    <p:outputLabel  value="${p.name}"  styleClass="custom-text" />
+                </p:column>
+
+                <p:column headerText="PRICE"   styleClass="custom-text" >
+                    <p:outputLabel value="${p.price} £"  styleClass="custom-text"/>
+                </p:column>
+
+                <p:column headerText="QUANTITIY"   styleClass="custom-text" >
+                    <p:outputLabel value="${p.quantity}"  styleClass="custom-text" />  
+                </p:column>
+
+                <p:column headerText="RATING"  styleClass="custom-text">
+                    <p:outputLabel value="${p.rating} *"  styleClass="custom-text"/>
+                </p:column>
+
+                <p:column headerText="IMAGE"  styleClass="custom-text">
+                    <p:graphicImage value="#{p.imagePath}" alt="No Image"  style="width: 200px;height: 200px"/>
+                </p:column>
+
+                <p:column> 
+                    <p:commandButton   icon="pi pi-align-justify" actionListener="#{personaController.view(p)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin:20px;background-color: background;"/>
+                    <p:commandButton  icon="pi pi-plus" actionListener="#{personaController.addCart(p)}"  update= ":myForm " style="color: black;margin:20px;background-color: background"/>
+                </p:column>
+
+            </p:dataTable> 
+        </h:form>
+
+
+
+
+
+        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog" resizable="false" modal="true" styleClass="custom-dialog" style="background-color: bisque;">
+            <h:form id="viewForm"> 
+                <p:growl id="msgs" showDetail="true" /> 
+                <p:messages />
+
+                <p:graphicImage value="#{personaController.selectedPersona.imagePath}" alt="No Image" width="400px" height="400"/>
+
+                <h:panelGrid columns="2" style="margin: 40px" >
+                    <h:outputLabel for="viewName" value="Name:" styleClass="custom-text"/>
+                    <h:outputText id="viewName" value="#{personaController.selectedPersona.name}"  styleClass="custom-dialog-text" />
+
+                    <h:outputLabel for="viewPrice" value="Price:" styleClass="custom-text"/>
+                    <h:outputText id="viewPrice" value="#{personaController.selectedPersona.price}£" styleClass="custom-dialog-text"/>
+
+                    <h:outputLabel for="viewQuantity" value="Quantity:" styleClass="custom-text"/>
+                    <h:outputText id="viewQuantity" value="#{personaController.selectedPersona.quantity}" styleClass="custom-dialog-text" />
+
+                    <h:outputLabel for="viewRating" value="Rating:"  styleClass="custom-text" />
+                    <h:outputText id="viewRating" styleClass="custom-dialog-text" value="#{personaController.selectedPersona.rating} *"/>
+
+                </h:panelGrid>
+
+                <p:column>
+                        <p:commandButton value="Add Cart"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
+                                         background-color:antiquewhite ;" update=":myForm"  actionListener="#{personaController.addCart(personaController.selectedPersona)}" styleClass="custom-button" />
+                </p:column>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

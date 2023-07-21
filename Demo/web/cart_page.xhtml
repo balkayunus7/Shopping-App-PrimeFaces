@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="myForm2"> 
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{personaController.goBacktoPage}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
+                              font-size: 15px;
+                              color:black;
+                              background-color:antiquewhite ;
+                              border-radius: 20px;" />
+            <p:dataScroller value="#{personaController.selectedItems}" var="item" mode="inline" chunkSize="30" >
+                <div class="product">
+                    <div class="product-list-item p-5">
+                        <p:graphicImage value="#{item.imagePath}" alt="No Image" style="width: 150px; height: 150px; border-radius: 10px" />
+                        <div class="product-list-detail">
+                            <div class="product-name">#{item.name}</div>
+                            <div class="product-description">#{item.rating}</div>
+                        </div>
+                        <div class="product-list-action">
+                            <h:outputText value="#{item.price}">
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                </div>
+            </p:dataScroller>
+        </h:form>
+
+    </h:body>
+</html>

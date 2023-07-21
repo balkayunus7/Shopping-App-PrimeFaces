@@ -1,0 +1,29 @@
+/* Başlık çubuğu için */
+.ui-dialog-titlebar {
+    background-color:blanchedalmond  ; /* Mavi arka plan rengi */
+    color: #fff; /* Beyaz yazı rengi */
+    font-weight: bold;
+    font-size: 22px;/* Kalın yazı */
+}
+
+/* Başlık metni için */
+.ui-dialog-title {
+    padding: 10px;
+    color :black;
+    font-weight: bold;/* Başlık metni içeriğinden boşluk */
+
+}
+
+/* Kapatma düğmesi için */
+.ui-dialog-titlebar-icon {
+    background-color:blanchedalmond ; /* Kapatma düğmesi arka plan rengi */
+}
+
+/* İçerik alanı için */
+.ui-dialog-content {
+    background-color:cornsilk  ; /* Mavi arka plan rengi */
+    color: cornsilk;
+}
+
+
+
