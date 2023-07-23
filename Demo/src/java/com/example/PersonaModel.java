@@ -1,7 +1,5 @@
 package com.example;
 
-import java.util.Objects;
-
 public class PersonaModel {
 
     private int id;
@@ -10,24 +8,16 @@ public class PersonaModel {
     private int quantity;
     private double rating;
     private String imagePath;
-    private boolean duplicate;
+    private String description;
 
-    public PersonaModel(int id, int price, String name, int quantity, double rating, String imagePath) {
+    public PersonaModel(int id, int price, String name, int quantity, double rating, String imagePath, String description) {
         this.id = id;
         this.price = price;
         this.name = name;
         this.quantity = quantity;
         this.rating = rating;
         this.imagePath = imagePath;
-        this.duplicate = false;
-    }
-
-    public boolean isDuplicate() {
-        return duplicate;
-    }
-
-    public void setDuplicate(boolean duplicate) {
-        this.duplicate = duplicate;
+        this.description = description;
     }
 
     public int getId() {
@@ -78,22 +68,12 @@ public class PersonaModel {
         this.imagePath = imagePath;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        PersonaModel that = (PersonaModel) o;
-
-        return id == that.id && Objects.equals(name, that.name);
+    public String getDescription() {
+        return description;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
+    public void setDescription(String description) {
+        this.description = description;
     }
+
 }

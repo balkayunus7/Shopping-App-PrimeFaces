@@ -4,4 +4,48 @@
     color: black; /* Mavi renk */
     font-size: 20px;
 }
+.custom-empty-desc {
+    font-weight: 700; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 20px;
+}
+.custom-empty-text {
+    font-weight: bold; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 30px;
+}
+
+.custom-cart-text {
+    font-weight: bold; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.custom-cart-text-price {
+    font-weight: bold; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 35px;
+    margin-right:100px;
+    margin-top:20px;
+    margin-bottom:15px;
+}
+.custom-cart-text-rating {
+    font-weight: bold; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 20px;
+    margin-right:100px;
+    margin-bottom:30px;
+    margin-left: 540px;
+}
+
+.custom-cart-text-desc {
+    font-weight: 500; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 15px;
+    margin-bottom:40px;
+    margin-left: 20px;
+
+}
 

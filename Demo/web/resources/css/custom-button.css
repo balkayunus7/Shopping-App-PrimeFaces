@@ -6,5 +6,12 @@
     padding-left: 150px;
     border-radius: 20px;
 }
+.custom-button-cart {
+    font-weight: bold;
+    font-size: 10px;
+    color:black;
+    background-color:antiquewhite ;
+    border-radius: 20px;
+}
 
 

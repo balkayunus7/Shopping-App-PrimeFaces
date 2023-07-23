@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+        <h:outputStylesheet name="css/custom-image.css"/>
+
+        <h:outputStylesheet name="css/product-list.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="myForm2"> 
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{personaController.goBacktoPage}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
+                              font-size: 15px;
+                              color:black;
+                              background-color:antiquewhite ;
+                              border-radius: 20px;" />
+            <div class="product-info-left  custom-empty-text ">
+                <h:outputText style="margin-left: 30px" value="Ödeme Seçenekleri"/>
+            </div>
+
+            <p:dataScroller value="#{personaController.selectedItems}"  var="item" mode="inline" chunkSize="30" style="margin: 20px;width: 1000px ">
+                <div class="product">
+                    <div class="product-list-item p-5">
+
+                        <div class="product-list-detail">
+                            <div class="product-info-left  custom-cart-text ">
+                                <h:outputText value="Kredi Kartı/Banka  Kartı"/>
+                            </div>
+                            <div class="product-info-left  custom-cart-text-desc">
+                                <h:outputText  value="Shoes Description"/>
+                            </div>
+                            <div class="product-list-item p-5 ">
+                                <h:outputText value="Kart no:" style="margin-left:100px;margin-top: 5px" />
+                                <p:inputText size="40" id="float-input" style="margin-left: 5px" value=""/>
+                            </div> 
+                            <div class="product-list-item p-5 ">
+                                <h:outputText value="Kart Üzerindeki İsim" style="margin:10px" />
+                                <p:inputText  size="40" id="float-input2" style="margin-top: 5px" value=""/>
+                            </div>  
+                            <div class="product-list-item p-5 ">
+                                <h:outputText value="Son Kullanma Tarihi:" style="margin:10px" />
+                                <p:inputText size="8" id="float-input3" style="margin-right: 10px;margin-top: 5px" value=""/>
+                                <p:inputText size="8" id="float-input36" style="margin-top: 5px" value=""/>
+                            </div>  
+                            <div class="product-list-item p-5 ">
+                                <h:outputText value="CVC2:" style="margin-left:115px;margin-top: 5px" />
+                                <p:inputText  size="8" id="float-inputw2" style="margin-left: 5px;margin-top: 5px" value=""/>
+                            </div>  
+                        </div>
+                        <p:graphicImage value="/resources/images/myimage.png" alt="My Image"   />
+                    </div>
+                </div>
+            </p:dataScroller>
+        </h:form>
+
+    </h:body>
+</html>

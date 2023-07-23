@@ -9,6 +9,7 @@
         <h:outputStylesheet name="css/custom-button.css"/> 
         <h:outputStylesheet name="css/custom-dialog-text.css"/>
         <h:outputStylesheet name="css/custom-dialog.css"/>
+
     </h:head>
     <h:body>
         <h:form id="myForm"> 
@@ -16,27 +17,28 @@
             <h:panelGrid columns="3" >
             </h:panelGrid>   
             <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
-                             background-color:antiquewhite ;" update=":myForm" action="#{personaController.goToPage()}"   />
-            <p:dataTable id="dtPersona" value="#{personaController.list}" var="p"  styleClass="custom-table" >
+                              background-color:antiquewhite ;" update=":myForm" action="#{personaController.goToPage()}"   />
+            <p:dataTable id="dtPersona" value="#{personaController.list}" var="p" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
                 <p:column  headerText="NAME"  styleClass="custom-text">
-                    <p:outputLabel  value="${p.name}"  styleClass="custom-text" />
+                    <p:outputLabel  value="${p.name}"  styleClass="custom-text" style="font-size: 20px" />
                 </p:column>
 
                 <p:column headerText="PRICE"   styleClass="custom-text" >
-                    <p:outputLabel value="${p.price} £"  styleClass="custom-text"/>
+                    <p:outputLabel value="£${p.price} "  style="font-size: 20px" />
                 </p:column>
 
-                <p:column headerText="QUANTITIY"   styleClass="custom-text" >
-                    <p:outputLabel value="${p.quantity}"  styleClass="custom-text" />  
+                <p:column headerText="DETAILS"   styleClass="custom-text" >
+                    <p:outputLabel value="${p.description}"  style="font-size: 20px" />  
                 </p:column>
 
                 <p:column headerText="RATING"  styleClass="custom-text">
-                    <p:outputLabel value="${p.rating} *"  styleClass="custom-text"/>
+                    <p:outputLabel value="${p.rating}" style="font-size: 20px"/>
+                    <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
                 </p:column>
 
                 <p:column headerText="IMAGE"  styleClass="custom-text">
-                    <p:graphicImage value="#{p.imagePath}" alt="No Image"  style="width: 200px;height: 200px"/>
+                    <p:graphicImage value="#{p.imagePath}" alt="No Image"  style="width: 200px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
                 </p:column>
 
                 <p:column> 
@@ -56,7 +58,7 @@
                 <p:growl id="msgs" showDetail="true" /> 
                 <p:messages />
 
-                <p:graphicImage value="#{personaController.selectedPersona.imagePath}" alt="No Image" width="400px" height="400"/>
+                <p:graphicImage value="#{personaController.selectedPersona.imagePath}" alt="No Image" style="margin-left: 30px" width="345px" height="432"/>
 
                 <h:panelGrid columns="2" style="margin: 40px" >
                     <h:outputLabel for="viewName" value="Name:" styleClass="custom-text"/>
@@ -65,17 +67,16 @@
                     <h:outputLabel for="viewPrice" value="Price:" styleClass="custom-text"/>
                     <h:outputText id="viewPrice" value="#{personaController.selectedPersona.price}£" styleClass="custom-dialog-text"/>
 
-                    <h:outputLabel for="viewQuantity" value="Quantity:" styleClass="custom-text"/>
-                    <h:outputText id="viewQuantity" value="#{personaController.selectedPersona.quantity}" styleClass="custom-dialog-text" />
+                    <h:outputLabel for="viewQuantity" value="Detail:" styleClass="custom-text"/>
+                    <h:outputText id="viewQuantity" value="#{personaController.selectedPersona.description}" styleClass="custom-dialog-text" />
 
                     <h:outputLabel for="viewRating" value="Rating:"  styleClass="custom-text" />
-                    <h:outputText id="viewRating" styleClass="custom-dialog-text" value="#{personaController.selectedPersona.rating} *"/>
-
+                    <h:outputText  id="viewRating" styleClass="custom-dialog-text" value="#{personaController.selectedPersona.rating}*"/>
                 </h:panelGrid>
 
                 <p:column>
-                        <p:commandButton value="Add Cart"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
-                                         background-color:antiquewhite ;" update=":myForm"  actionListener="#{personaController.addCart(personaController.selectedPersona)}" styleClass="custom-button" />
+                    <p:commandButton value="Add Cart"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
+                                     background-color:antiquewhite ;" update=":myForm"  actionListener="#{personaController.addCart(personaController.selectedPersona)}" styleClass="custom-button" />
                 </p:column>
             </h:form>
         </p:dialog>
