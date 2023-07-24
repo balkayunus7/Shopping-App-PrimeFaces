@@ -1,6 +1,6 @@
 package com.example;
 
-public class PersonaModel {
+public class ProductModel {
 
     private int id;
     private String name;
@@ -10,7 +10,7 @@ public class PersonaModel {
     private String imagePath;
     private String description;
 
-    public PersonaModel(int id, int price, String name, int quantity, double rating, String imagePath, String description) {
+    public ProductModel(int id, int price, String name, int quantity, double rating, String imagePath, String description) {
         this.id = id;
         this.price = price;
         this.name = name;

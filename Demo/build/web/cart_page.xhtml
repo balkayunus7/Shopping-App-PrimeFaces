@@ -11,19 +11,18 @@
         <h:outputStylesheet name="css/custom-dialog-text.css"/>
         <h:outputStylesheet name="css/custom-dialog.css"/>
         <h:outputStylesheet name="css/custom-image.css"/>
-
         <h:outputStylesheet name="css/product-list.css"/>
     </h:head>
     <h:body>
         <h:form id="myForm2"> 
-            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{personaController.goBacktoPage}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{cartBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
                               font-size: 15px;
                               color:black;
                               background-color:antiquewhite ;
                               border-radius: 20px;" />
 
 
-            <p:dataScroller value="#{personaController.selectedItems}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
+            <p:dataScroller value="#{cartBean.selectedItems}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
                 <div class="product">
                     <div class="product-list-item p-5">
                         <div class="product-image image-shadow">
@@ -54,28 +53,28 @@
                             </div>
 
                             <div class="product-list-detail">
-                                <p:commandButton icon="pi pi-minus-circle"  actionListener="#{personaController.removeCart(item)}" style="margin-left:530px;margin-right: 10px"    update="myForm2"  />
-                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{personaController.addCart(item)}" style="margin-right: 10px"    update="myForm2"  />
-                                <p:commandButton icon="pi pi-trash"  actionListener="#{personaController.deleteCart(item)}" style="margin-right: 10px"  update="myForm2" />
+                                <p:commandButton icon="pi pi-minus-circle"  actionListener="#{cartBean.removeCart(item)}" style="margin-left:530px;margin-right: 10px"    update="myForm2"  />
+                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{cartBean.addCart(item)}" style="margin-right: 10px"    update="myForm2"  />
+                                <p:commandButton icon="pi pi-trash"  actionListener="#{cartBean.deleteCart(item)}" style="margin-right: 10px"  update="myForm2" />
                             </div>
                         </div>
                     </div>
                 </div>
             </p:dataScroller>
             <div class="product-empty">
-                <h:outputLabel rendered="#{empty personaController.selectedItems}">
+                <h:outputLabel rendered="#{empty cartBean.selectedItems}">
                     <i class="pi pi-shopping-cart" style="color: burlywood; font-size: 3em;"></i>
                 </h:outputLabel>               
-                <h:outputText value="Sepetin şuan boş!" rendered="#{empty personaController.selectedItems}" styleClass="custom-empty-text" />
+                <h:outputText value="Sepetin şuan boş!" rendered="#{empty cartBean.selectedItems}" styleClass="custom-empty-text" />
                 <h:outputText value="Sepetini Hepsiburada’nın fırsatlarla dolu dünyasından doldurmak için
-                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty personaController.selectedItems}" styleClass="custom-empty-desc" />
+                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty cartBean.selectedItems}" styleClass="custom-empty-desc" />
             </div>
 
 
 
             <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; background-color: bisque; padding: 10px; border-radius: 5px;">
-                <h:outputText id="totalPriceDisplay" value="Total Price: £#{personaController.totalPrice}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
-                <p:commandButton icon="pi pi-credit-card" action="#{personaController.goPaymentPage()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
+                <h:outputText id="totalPriceDisplay" value="Total Price: £#{cartBean.totalPrice}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
+                <p:commandButton icon="pi pi-credit-card" action="#{productBean.goNewPage()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
             </p:outputPanel>
 
         </h:form>

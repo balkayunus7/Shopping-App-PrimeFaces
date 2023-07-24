@@ -1,46 +1,38 @@
+package com.example;
 
-import com.example.PersonaModel;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
-@SessionScoped
+@ApplicationScoped
 public class CartBean {
-
-    private List<PersonaModel> selectedItems = new ArrayList<>();
+    
+    private List<ProductModel> selectedItems = new ArrayList<>();
     private double totalPrice;
-    private PersonaModel selectedPersona;
-    private MessageBean messageBean;
-
-    // Getter and Setter methods for MessageBean
-    public MessageBean getMessageBean() {
-        return messageBean;
-    }
-
-    public void setMessageBean(MessageBean messageBean) {
-        this.messageBean = messageBean;
-    }
+    private ProductModel selectedProduct;
 
     // Getter and Setter methods for selectedPersona
-    public PersonaModel getSelectedPersona() {
-        return selectedPersona;
+    public ProductModel getSelectedProduct() {
+        return selectedProduct;
     }
 
-    public void setSelectedPersona(PersonaModel selectedPersona) {
-        this.selectedPersona = selectedPersona;
+    public void setSelectedProduct(ProductModel selectedProduct) {
+        this.selectedProduct = selectedProduct;
     }
 
     // Getter and Setter methods for selectedItems
-    public List<PersonaModel> getSelectedItems() {
+    public List<ProductModel> getSelectedItems() {
         return selectedItems;
     }
 
-    public void setSelectedItems(List<PersonaModel> selectedItems) {
+    public void setSelectedItems(List<ProductModel> selectedItems) {
         this.selectedItems = selectedItems;
     }
 
@@ -48,7 +40,7 @@ public class CartBean {
     // Method that calculates the total amount of all products in the basket
     public double calculateTotalPrice() {
         double total = 0;
-        for (PersonaModel item : selectedItems) {
+        for (ProductModel item : selectedItems) {
             total += item.getPrice() * item.getQuantity();
         }
         return total;
@@ -62,8 +54,8 @@ public class CartBean {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
-    
-     // Method that calculates the total amount of all products in the basket
+
+    // Method that calculates the total amount of all products in the basket
     public void updateTotalPrice() {
         double total = calculateTotalPrice();
         // Set the updated total price to a variable in the CartBean class
@@ -72,21 +64,18 @@ public class CartBean {
     }
 
     // Method to remove a product from the cart
-    public void deleteCart(PersonaModel persona) {
-        selectedPersona = persona;
+    public void deleteCart(ProductModel product) {
+        selectedProduct = product;
         try {
-            if (selectedItems.contains(selectedPersona)) {
-                // If the product is in the cart, remove the product from the cart
-                messageBean.showDeleteMessage(selectedPersona);
-
+            if (selectedItems.contains(selectedProduct)) {
                 // Schedule the redirect after 1 second (1000 milliseconds)
                 ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
                 scheduler.schedule(() -> {
                     goToPage();
                 }, 1, TimeUnit.SECONDS);
                 scheduler.shutdown();
-                selectedPersona.setQuantity(1); // Set the quantity of the product in the cart to 1
-                selectedItems.remove(selectedPersona);
+                selectedProduct.setQuantity(1); // Set the quantity of the product in the cart to 1
+                selectedItems.remove(selectedProduct);
             } else {
                 // If the product is not in the cart, do not take any action
             }
@@ -96,28 +85,26 @@ public class CartBean {
         updateTotalPrice();
     }
 
-
     // Method to add a product to the cart
-    public void addCart(PersonaModel persona) {
-        selectedPersona = persona;
+    public void addCart(ProductModel persona) {
+        selectedProduct = persona;
         try {
-            int index = selectedItems.indexOf(selectedPersona);
+            int index = selectedItems.indexOf(selectedProduct);
             if (index >= 0) {
                 // If the product is already in the cart, just increase the number of items
-                PersonaModel existingItem = selectedItems.get(index);
+                ProductModel existingItem = selectedItems.get(index);
                 existingItem.setQuantity(existingItem.getQuantity() + 1);
             } else {
                 // If the item is not in the cart, add it to the cart
-                messageBean.showMessage(persona);
-
+                showMessage(persona);
                 // Schedule the redirect after 1 second (1000 milliseconds)
                 ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
                 scheduler.schedule(() -> {
                     goToPage();
                 }, 1, TimeUnit.SECONDS);
                 scheduler.shutdown();
-                selectedPersona.setQuantity(1);
-                selectedItems.add(selectedPersona);
+                selectedProduct.setQuantity(1);
+                selectedItems.add(selectedProduct);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,12 +113,12 @@ public class CartBean {
     }
 
     // Method to remove a product from the cart
-    public void removeCart(PersonaModel persona) {
-        selectedPersona = persona;
+    public void removeCart(ProductModel product) {
+        selectedProduct = product;
         try {
-            int index = selectedItems.indexOf(selectedPersona);
+            int index = selectedItems.indexOf(selectedProduct);
             if (index >= 0) {
-                PersonaModel existingItem = selectedItems.get(index);
+                ProductModel existingItem = selectedItems.get(index);
                 int quantity = existingItem.getQuantity();
                 if (quantity > 1) {
                     // If the quantity is more than 1, decrease the number of items
@@ -145,6 +132,11 @@ public class CartBean {
             e.printStackTrace();
         }
         updateTotalPrice();
+    }
+
+    // Wrote code to detect the clicked value for dialog
+    public void view(ProductModel product) {
+        selectedProduct = product;
     }
 
     // Method to redirect to the cart page
@@ -162,5 +154,12 @@ public class CartBean {
         return "payment_page.xhtml?faces-redirect=true";
     }
 
-    // Other methods related to the cart...
+  
+
+    public void showMessage(ProductModel product) {
+        selectedProduct = product;
+        String productName = selectedProduct.getName();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!!!!!!!!!", "Product added to cart. "));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Name:", productName));
+    }
 }

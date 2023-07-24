@@ -7,7 +7,7 @@
 .custom-empty-desc {
     font-weight: 700; /* Kalın yazı */
     color: black; /* Mavi renk */
-    font-size: 20px;
+    font-size: 17px;
 }
 .custom-empty-text {
     font-weight: bold; /* Kalın yazı */
@@ -49,3 +49,11 @@
 
 }
 
+.custom-login-text{
+    font-weight: 500; /* Kalın yazı */
+    color: black; /* Mavi renk */
+    font-size: 15px;
+    margin-bottom:20px;
+    margin-left: 20px;
+    border-radius: 20px;
+}

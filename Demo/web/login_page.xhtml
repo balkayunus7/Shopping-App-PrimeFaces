@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+        <h:outputStylesheet name="css/custom-image.css"/>
+        <h:outputStylesheet name="css/product-list.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+
+            <div class="product">
+                <div class="product-list-item p-5">        
+                    <div class="product-list-detail" style="margin-left: 200px;margin-top: 90px;padding: 50px">
+                        <div class="product-info-left  custom-empty-text ">
+                            <h:outputText value="LOGIN" style="margin-left: 100px"/>
+                        </div>
+                        <div class="product-info-left  custom-empty-desc">
+                            <h:outputText style="margin-left: 20px;margin-bottom: 20px"  value="How to i get started lorem ipsum dolor at?" />
+                        </div>
+                        <div class="product-info-left  custom-login-text">
+                            <p:inputText value="#{authBean.email}"  size="35" style="margin-bottom: 15px" placeholder="Email" required="true"  id="email"  />
+                        </div>
+                        <div class="product-info-left  custom-login-text">
+                            <p:inputText value="#{authBean.password}" size="35" id="password" placeholder="Password" required="true" />
+                        </div>
+                        <div class="product-list-detail">
+                            <p:commandButton value="Login Now"  action="#{authBean.login()}" style="margin-left:100px;margin-right: 10px;padding: 7px"    />
+                        </div>
+                        <div class="product-info-left  custom-empty-desc">
+                            <h:outputText style="margin-left: 100px;margin-top: 20px;margin-bottom:  20px;font-size: 19px" value="Login With Others"/>
+                        </div>
+                        <div class="product-list-item p-5  custom-login-text">
+                            <i class="pi pi-google" style="margin-left: 75px;margin-right: 10px;color: blue"></i>
+                            <h:outputText value="Login With Google" />
+                        </div>
+                    </div>
+                    <div class="product-list-detail">
+                        <p:graphicImage value="/resources/images/login.png" width="800" height="950" alt="My Image"/>
+                    </div>
+                </div>
+            </div>
+            <p:message for="email" />
+        </h:form>
+    </h:body>
+</html>
