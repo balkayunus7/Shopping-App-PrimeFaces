@@ -14,50 +14,47 @@
         <h:outputStylesheet name="css/product-list.css"/>
     </h:head>
     <h:body>
-        <h:form id="myForm3"> 
-            <p:dataScroller  id="id1" value=""  mode="inline" chunkSize="30" style="margin: 20px;width: 1300px">
-                <div class="product">
-                    <div class="product-list-item p-5">
-
-                        <div class="product-list-detail">
-                            <div class="product-info-left  custom-cart-text ">
-                                <h:outputText value="Kredi Kartı/Banka  Kartı"/>
-                            </div>
-                            <div class="product-info-left  custom-cart-text-desc">
-                                <h:outputText  value="Masterpass"/>
-                            </div>
-                            <div class="product-list-item p-5 ">
-                                <h:outputText value="Kart no:" style="margin-left:100px;margin-top: 18px;margin-right: 5px" />
-                                <p:inputText size="40" maxlength="16" id="float-input2" required="true" style="margin-top: 15px" value=""  />
-                            </div> 
-                            <div class="product-list-item p-5 ">
-                                <h:outputText value="Kart Üzerindeki İsim:" style="margin-top: 15px;margin-right: 10px;margin-left: 6px" />
-                                <p:inputText size="40" id="float-input23" required="true" style="margin-top: 15px" value=" "  />
-                            </div> 
-                            <div class="product-list-item p-5 ">
-                                <h:outputText value="Son Kullanma Tarihi:" style="margin-top: 25px;margin-right: 10px;margin-left: 10px" />
-                                <p:inputText size="8" id="float-input3" required="true" maxlength="5" style="margin-right:  10px;margin-top: 15px" value=""/>
-                                <p:inputText size="8" id="float-input36" required="true" maxlength="4"   style="margin-top: 15px" value=""/>
-                            </div>  
-                            <div class="product-list-item p-5 ">
-                                <h:outputText value="CVC2:" style="margin-left:115px;margin-top: 20px" />
-                                <p:inputText  size="8" id="float-inputw2" required="true" maxlength="3"   style="margin-left: 5px;margin-top: 15px;margin-right: 10px" value=""/>
-                                <h:outputText value="CVC2 Nedir?" style="color:blue;margin-top: 20px" />
-                            </div>  
-                            <div class="product-list-item p-5 ">
-                                <p:selectBooleanCheckbox  style="margin-left:160px;margin-top: 15px;margin-right: 8px"/>
-                                <h:outputText value="3D Kullanmak İstiyorum" style="margin-top: 15px;margin-right: 8px" />
-                                <h:outputText value="3D Nedir?" style="color:blue;margin-top: 15px" />
-                            </div>  
-                            <div class="product-list-item p-5 ">
-                                <p:selectBooleanCheckbox  style="margin-left:160px;margin-top: 15px;margin-right: 8px"/>
-                                <h:outputText value="Kredi Kartı Bilgilerimin kaydedilmesini Onaylıyorum." style="margin-top: 15px;margin-right: 8px" />
-                                <h:outputText value="Masterpass Nedir?" style="color:blue;margin-top: 15px" />
-                            </div> 
-                            <p:commandButton  action="#{productBean.goNewPage()}"  value="Pay:#{cartBean.totalPrice} £"  styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 20px; margin-left: 160px;margin-top: 20px" />
+        <h:form id="myForm"> 
+            <p:dataScroller  value=" "  mode="inline" chunkSize="30" style="margin: 20px;width: 1300px">
+                <div class="product-list-item p-5">
+                    <div class="product-list-detail">
+                        <div class="product-info-left  custom-cart-text ">
+                            <h:outputText value="Kredi Kartı/Banka  Kartı"/>
                         </div>
-                        <p:graphicImage value="/resources/images/myimage.png" alt="My Image"/>
+                        <div class="product-info-left  custom-cart-text-desc">
+                            <h:outputText  value="Masterpass"/>
+                        </div>
+                        <div class="product-list-item p-5 ">
+                            <h:outputText value="Kart no:" style="margin-left:100px;margin-top: 18px;margin-right: 5px" />
+                            <p:inputText size="40" maxlength="16" id="float-input2" style="margin-top: 15px" value=" "  />
+                        </div> 
+                        <div class="product-list-item p-5 ">
+                            <h:outputText value="Kart Üzerindeki İsim:" style="margin-top: 15px;margin-right: 10px;margin-left: 6px" />
+                            <p:inputText size="40" id="float-input23"  style="margin-top: 15px" value=" "  />
+                        </div> 
+                        <div class="product-list-item p-5 ">
+                            <h:outputText value="Son Kullanma Tarihi:" style="margin-top: 25px;margin-right: 10px;margin-left: 10px" />
+                            <p:inputText size="8" id="float-input3"  maxlength="5" style="margin-right:  10px;margin-top: 15px" value=" "/>
+                            <p:inputText size="8" id="float-input36"  maxlength="4"   style="margin-top: 15px" value=" "/>
+                        </div>  
+                        <div class="product-list-item p-5 ">
+                            <h:outputText value="CVC2:" style="margin-left:115px;margin-top: 20px" />
+                            <p:inputText  size="8" id="float-inputw2"  maxlength="3"   style="margin-left: 5px;margin-top: 15px;margin-right: 10px" value=" "/>
+                            <h:outputText value="CVC2 Nedir?" style="color:blue;margin-top: 20px" />
+                        </div>  
+                        <div class="product-list-item p-5 ">
+                            <p:selectBooleanCheckbox  style="margin-left:160px;margin-top: 15px;margin-right: 8px"/>
+                            <h:outputText value="3D Kullanmak İstiyorum" style="margin-top: 15px;margin-right: 8px" />
+                            <h:outputText value="3D Nedir?" style="color:blue;margin-top: 15px" />
+                        </div>  
+                        <div class="product-list-item p-5 ">
+                            <p:selectBooleanCheckbox  style="margin-left:160px;margin-top: 15px;margin-right: 8px"/>
+                            <h:outputText value="Kredi Kartı Bilgilerimin kaydedilmesini Onaylıyorum." style="margin-top: 15px;margin-right: 8px" />
+                            <h:outputText value="Masterpass Nedir?" style="color:blue;margin-top: 15px" />
+                        </div> 
+                        <p:commandButton  action="#{authBean.returnMain()}"  value="Pay:#{cartBean.totalPrice} £"  styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 20px; margin-left: 160px;margin-top: 20px" />
                     </div>
+                    <p:graphicImage value="/resources/images/myimage.png" alt="My Image"/>
                 </div>
             </p:dataScroller>
         </h:form>

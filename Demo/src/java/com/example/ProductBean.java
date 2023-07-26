@@ -1,5 +1,4 @@
 package com.example;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -31,22 +30,11 @@ public class ProductBean {
         this.productList = personaList;
     }
     
-     // Method to redirect to the payment page
-    public String goNewPage() {
-        return "login_page.xhtml?faces-redirect=true";
-    }
+   
 
     // Ürünlerin ana listesi
     @PostConstruct
     public void init() {
-        productList.add(new ProductModel(0, 10, "Air Jordan Legacy 312 Low", 0, 4.5, imageUrl, "Erkek Ayakkabısı"));
-        productList.add(new ProductModel(1, 7, "Air Jordan 1 Low", 0, 4.2, imageUrl2, "Erkek Ayakkabısı"));
-        productList.add(new ProductModel(2, 12, "Lebron 4", 0, 3.2, imageUrl3, "Basketbol Ayakkabısı"));
-        productList.add(new ProductModel(3, 55, "Jordan One Take 4", 0, 2.7, imageUrl4, "Basketbol Ayakkabısı"));
-        productList.add(new ProductModel(4, 4, "Nike Air Force 1 Shadow", 10, 4.8, imageUrl5, "Kadın Ayakkabısı"));
-        productList.add(new ProductModel(5, 200, "Air Jordan Legacy 312", 0, 3.9, imageUrl6, "Basketbol Ayakkabısı"));
-        productList.add(new ProductModel(6, 4, "Air Jordan 1 Low", 0, 1.6, imageUrl7, "Unisex"));
-        productList.add(new ProductModel(7, 500, "Nike Court Vision Mid Next Nature", 0, 4, imageUrl8, "Unisex"));
-        productList.add(new ProductModel(8, 3, "Nike x Billie Eilish Air Force 1 High '07", 0, 3, imageUrl9, "Kadın Ayakkabısı"));
+      
     }
 }

@@ -9,36 +9,36 @@
         <h:outputStylesheet name="css/custom-button.css"/> 
         <h:outputStylesheet name="css/custom-dialog-text.css"/>
         <h:outputStylesheet name="css/custom-dialog.css"/>
-
     </h:head>
     <h:body>
         <h:form id="myForm"> 
             <p:growl id="messages" showDetail="true" /> 
-            <h:panelGrid columns="3" >
-            </h:panelGrid>   
+         
+            <p:commandButton  value="Logout"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
+                              background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
             <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
                               background-color:antiquewhite ;" update=":myForm" action="#{cartBean.goToPage()}"   />
-            <p:dataTable id="dtPersona" value="#{productBean.list}" var="p" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
+            <p:dataTable id="dtPersona" value="#{databaseBean.product}" var="product" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
                 <p:column  headerText="NAME"  styleClass="custom-text">
-                    <p:outputLabel  value="${p.name}"  styleClass="custom-text" style="font-size: 20px" />
+                    <p:outputLabel  value="${product.name}"  styleClass="custom-text" style="font-size: 20px" />
                 </p:column>
 
                 <p:column headerText="PRICE"   styleClass="custom-text" >
-                    <p:outputLabel value="£${p.price} "  style="font-size: 20px" />
+                    <p:outputLabel value="£${product.price} "  style="font-size: 20px" />
                 </p:column>
 
                 <p:column headerText="DETAILS"   styleClass="custom-text" >
-                    <p:outputLabel value="${p.description}"  style="font-size: 20px" />  
+                    <p:outputLabel value="${product.description}"  style="font-size: 20px" />  
                 </p:column>
 
                 <p:column headerText="RATING"  styleClass="custom-text">
-                    <p:outputLabel value="${p.rating}" style="font-size: 20px"/>
+                    <p:outputLabel value="${product.rating}" style="font-size: 20px"/>
                     <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
                 </p:column>
 
                 <p:column headerText="IMAGE"  styleClass="custom-text">
-                    <p:graphicImage value="#{p.imagePath}" alt="No Image"  style="width: 200px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
+                    <p:graphicImage value="#{product.imagePath}" alt="No Image"  style="width: 200px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
                 </p:column>
 
                 <p:column> 
@@ -58,7 +58,7 @@
                 <p:growl id="msgs" showDetail="true" /> 
                 <p:messages />
 
-                <p:graphicImage value="#{cartBean.selectedProduct.imagePath }" alt="No Image" style="margin-left: 30px" width="345px" height="432"/>
+                <p:graphicImage value="#{cartBean.selectedProduct.imagePath}" alt="No Image" style="margin-left: 30px" width="345px" height="432"/>
 
                 <h:panelGrid columns="2" style="margin: 40px" >
                     <h:outputLabel for="viewName" value="Name:" styleClass="custom-text"/>

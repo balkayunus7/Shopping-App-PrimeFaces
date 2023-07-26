@@ -74,7 +74,7 @@
 
             <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; background-color: bisque; padding: 10px; border-radius: 5px;">
                 <h:outputText id="totalPriceDisplay" value="Total Price: £#{cartBean.totalPrice}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
-                <p:commandButton icon="pi pi-credit-card" action="#{productBean.goNewPage()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
+                <p:commandButton icon="pi pi-credit-card" action="#{cartBean.goPaymentPage()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
             </p:outputPanel>
 
         </h:form>

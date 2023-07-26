@@ -1,7 +1,7 @@
 package com.example;
 
 public class ProductModel {
-
+    
     private int id;
     private String name;
     private int price;
@@ -10,15 +10,6 @@ public class ProductModel {
     private String imagePath;
     private String description;
 
-    public ProductModel(int id, int price, String name, int quantity, double rating, String imagePath, String description) {
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.quantity = quantity;
-        this.rating = rating;
-        this.imagePath = imagePath;
-        this.description = description;
-    }
 
     public int getId() {
         return id;
