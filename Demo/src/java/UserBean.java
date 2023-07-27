@@ -49,28 +49,35 @@ public class UserBean implements Serializable {
     }
 
     public void addCart(ProductModel product) throws ClassNotFoundException {
-        DatabaseBean databaseBean = new DatabaseBean();
-        List<ProductModel> cartProducts = databaseBean.getProductInList(username);
 
         try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            List<ProductModel> cartProducts = databaseBean.getProductInList(username);
 
             // Check if the product is already in the user's cart before adding it
             for (ProductModel cartProduct : cartProducts) {
                 if (cartProduct.getId() == product.getId()) {
-                    int newQuantity = cartProduct.getQuantity() + 1;
-
-                    // Product is already in the cart, show a message and return without adding it again
-                    databaseBean.updateCartProductQuantity(username, cartProduct.getId(), newQuantity);
+                    System.err.println("Aynı ürün eklendi.");
                     return;
                 }
             }
 
             // If the product is not already in the cart, add it
-            databaseBean.addProductToCart(username, product.getId(), product.getQuantity());
+            databaseBean.addProductToCart(username, product.getId());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product added to cart.", null));
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error adding product to cart.", null));
+        }
+    }
+
+    public void removeProduct(ProductModel product) {
+        try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            databaseBean.removeProductFromCart(username, product.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product removed from cart.", null));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error removing product from cart.", null));
         }
     }
 

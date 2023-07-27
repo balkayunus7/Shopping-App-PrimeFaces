@@ -13,7 +13,7 @@
     <h:body>
         <h:form id="myForm"> 
             <p:growl id="messages" showDetail="true" /> 
-            
+
             <div class=" product-list-item  custom-empty-text ">
                 <p:commandButton  value="Logout"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
                                   background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
@@ -54,9 +54,9 @@
 
 
 
-        
 
-        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog" resizable="false" modal="true" width="540" height="700" styleClass="custom-dialog" style="background-color: bisque;">
+
+        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog"  modal="true" width="540" height="700" styleClass="custom-dialog" style="background-color: bisque;">
             <h:form id="viewForm"> 
                 <p:growl id="msgs" showDetail="true" /> 
                 <p:messages />

@@ -15,39 +15,36 @@
     </h:head>
     <h:body>
         <h:form  id="myform3">
-                <div class="product-list-item p-5">        
-                    <div class="product-list-detail" style="margin-left: 200px;margin-top: 90px;padding: 50px">
-                        <div class="product-info-left  custom-empty-text ">
-                            <h:outputText value="LOGIN" style="margin-left: 100px;margin-bottom: 20px"/>
-                        </div>
-                        <div class="product-info-left  custom-empty-desc">
-                            <h:outputText style="margin-left: 20px;margin-bottom: 20px"  value="How to i get started lorem ipsum dolor at?" />
-                        </div>
-                        <div class="product-info-left  custom-login-text">
-                            <p:inputText value="#{userBean.username}"  size="35" style="margin-bottom: 15px" placeholder="Username:"   id="username"  />
-                        </div>
-                        <div class="product-info-left  custom-login-text">
-                            <p:password value="#{userBean.password}" feedback="true" placeholder="Password" size="35" promptLabel="Password" />
-                        </div>
-                        <div class="product-list-detail">
-                            <p:commandButton  value="Login Now"  action="#{userBean.login()}" style="margin-left:100px;margin-right: 10px;padding: 7px"    />
-                        </div>
-                        <div class="product-list-item    custom-empty-desc">
-                            <h:outputText style="margin-left: 50px;margin-top: 20px;margin-bottom:  20px;font-size: 17px" value="Don't have an account"/>
-                            <p:commandLink style="margin-left: 10px; margin-top: 20px; margin-bottom: 20px;" action="#{userBean.returnRegister()}">
-                                <p:outputLabel value="Sign Up" style=" font-size: 17px; color: blue" />
-                            </p:commandLink>
-
-                        </div>
-                        <div class="product-list-item p-5  custom-login-text">
-                            <i class="pi pi-google" style="margin-left: 75px;margin-right: 10px;color: blue"></i>
-                            <h:outputText value="Login With Google" />
-                        </div>
+            <div class="product-list-item p-5">        
+                <div class="product-list-detail" style="margin-left: 200px;margin-top: 90px;padding: 50px">
+                    <div class="product-info-left  custom-empty-text ">
+                        <h:outputText value="LOGIN" style="margin-left: 100px;margin-bottom: 20px"/>
+                    </div>
+                    <div class="product-info-left  custom-empty-desc">
+                        <h:outputText style="margin-left: 20px;margin-bottom: 20px"  value="How to i get started lorem ipsum dolor at?" />
+                    </div>
+                    <div class="product-info-left  custom-login-text">
+                        <p:inputText value="#{userBean.username}"  size="35" style="margin-bottom: 15px" placeholder="Username:"   id="username"  />
+                    </div>
+                    <div class="product-info-left  custom-login-text">
+                        <p:password value="#{userBean.password}" feedback="true" placeholder="Password" size="35" promptLabel="Password" />
                     </div>
                     <div class="product-list-detail">
-                        <p:graphicImage value="/resources/images/login.png" width="800" height="950" alt="My Image"/>
+                        <p:commandButton  value="Login Now"  action="#{userBean.login()}" style="margin-left:100px;margin-right: 10px;padding: 7px"    />
                     </div>
+                    <div class="product-list-item    custom-empty-desc">
+                        <h:outputText style="margin-left: 50px;margin-top: 20px;margin-bottom:  20px;font-size: 17px" value="Don't have an account"/>
+                        <p:commandLink style="margin-left: 10px; margin-top: 20px; margin-bottom: 20px;" action="#{userBean.returnRegister()}">
+                            <p:outputLabel value="Sign Up" style=" font-size: 17px; color: blue" />
+                        </p:commandLink>
+
+                    </div>
+
                 </div>
+                <div class="product-list-detail">
+                    <p:graphicImage value="/resources/images/login.png" width="800" height="950" alt="My Image"/>
+                </div>
+            </div>
         </h:form>
     </h:body>
 </html>

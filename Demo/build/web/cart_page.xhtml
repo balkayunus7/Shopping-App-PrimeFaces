@@ -40,7 +40,7 @@
                                 <h:outputText value="#{item.description}" />
                             </div>
                             <div class="product-info-left  custom-cart-text-desc">
-                                <p:inputText readonly="true" id="float-input" value="#{item.quantity}"/>
+                                <p:inputText readonly="true"  id="float-input" value="#{item.quantity}"/>
                             </div>
                         </div>
                         <div class="product-list-detail">
@@ -53,9 +53,9 @@
                             </div>
 
                             <div class="product-list-detail">
-                                <p:commandButton icon="pi pi-minus-circle"  actionListener="#{cartBean.removeCart(item)}" style="margin-left:530px;margin-right: 10px"    update="myForm2"  />
-                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{cartBean.addCart(item)}" style="margin-right: 10px"    update="myForm2"  />
-                                <p:commandButton icon="pi pi-trash"  actionListener="#{cartBean.deleteCart(item)}" style="margin-right: 10px"  update="myForm2" />
+                                <p:commandButton icon="pi pi-minus-circle"  actionListener=" " style="margin-left:530px;margin-right: 10px"    update="myForm2"  />
+                                <p:commandButton icon="pi pi-plus-circle"  actionListener=" " style="margin-right: 10px"    update="myForm2"  />
+                                <p:commandButton icon="pi pi-trash"  actionListener="#{userBean.removeProduct(item)}" style="margin-right: 10px"  update="myForm2" />
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,9 @@
+
 .product-list-item {
     display: flex;
     align-items: flex-start;
 }
+
 
 .product-list-detail {
     flex: 1;
@@ -31,3 +33,5 @@
     display: flex;
     align-items: flex-end;
 }
+
+

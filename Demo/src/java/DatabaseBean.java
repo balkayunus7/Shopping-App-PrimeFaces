@@ -11,6 +11,10 @@ import javax.faces.bean.ApplicationScoped;
 @ApplicationScoped
 public class DatabaseBean {
 
+    String url = "jdbc:postgresql://localhost:5432/shopme";
+    String dbUsername = "postgres";
+    String dbPassword = "yunus744";
+
     private List<ProductModel> products;
 
     // Added selected item to show in dialog panel. It will be used in the View metot.
@@ -35,16 +39,12 @@ public class DatabaseBean {
     public void init() {
         products = new ArrayList<>();
         try {
-            // Database connection parameters
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String username = "postgres";
-            String password = "yunus744";
 
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
 
             // set up the database connection
-            try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 String query = "SELECT * FROM products";
 
                 // Execute the query to fetch product data from the database
@@ -82,11 +82,6 @@ public class DatabaseBean {
     // Method to register a new user in the database
     public boolean registerUser(String username, String password, String email) {
         try {
-            // Database connection parameters
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String dbUsername = "postgres";
-            String dbPassword = "yunus744";
-
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
 
@@ -112,17 +107,12 @@ public class DatabaseBean {
     // Method to check if a user can log in
     public boolean loginUser(String username, String password) {
         try {
-            // Database connection parameters
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String dbUsername = "postgres";
-            String dbPassword = "yunus744";
-
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
 
             // Establish the database connection
             try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+                String query = "SELECT username, password FROM users WHERE username = ? AND password = ?";
 
                 // Execute the query to check if the provided username and password match a user in the 'users' table
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -140,7 +130,7 @@ public class DatabaseBean {
                             return false;
                         }
                     } catch (Exception e) {
-                        System.out.println("*************************************************");
+                        System.out.println("Doesn't find resultSet");
                     }
                 }
             }
@@ -152,22 +142,37 @@ public class DatabaseBean {
     }
 
     // add product to cart page with selected product
-    public void addProductToCart(String username, int product_Id, int quantity) {
+    public void addProductToCart(String username, int product_Id) {
         try {
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String dbUsername = "postgres";
-            String dbPassword = "yunus744";
 
             Class.forName("org.postgresql.Driver");
 
             try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "INSERT INTO user_products (username, product_id, quantity) VALUES (?, ?, ?) ";
+                String query = "INSERT INTO user_products (username, product_id) VALUES (?, ?) ";
 
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
 
                     statement.setString(1, username);
                     statement.setInt(2, product_Id);
-                    statement.setInt(3, quantity);
+
+                    statement.executeUpdate();
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeProductFromCart(String username, int product_Id) {
+        try {
+            Class.forName("org.postgresql.Driver");
+
+            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+                String query = "DELETE FROM user_products WHERE username = ? AND product_id = ?";
+
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
+                    statement.setString(1, username);
+                    statement.setInt(2, product_Id);
 
                     statement.executeUpdate();
                 }
@@ -181,11 +186,6 @@ public class DatabaseBean {
         List<ProductModel> cartProducts = new ArrayList<>();
 
         try {
-            // Database connection parameters
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String dbUsername = "postgres";
-            String dbPassword = "yunus744";
-
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
 
@@ -222,28 +222,4 @@ public class DatabaseBean {
         // Return the list of products in the user's cart
         return cartProducts;
     }
-
-    public void updateCartProductQuantity(String username, int productId, int newQuantity) {
-        try {
-            String url = "jdbc:postgresql://localhost:5432/shopme";
-            String dbUsername = "postgres";
-            String dbPassword = "yunus744";
-
-            Class.forName("org.postgresql.Driver");
-
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "UPDATE user_products SET quantity = ? WHERE username = ? AND product_id = ?";
-
-                try (PreparedStatement statement = connection.prepareStatement(query)) {
-                    statement.setInt(1, newQuantity);
-                    statement.setString(2, username);
-                    statement.setInt(3, productId);
-                    statement.executeUpdate();
-                }
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
