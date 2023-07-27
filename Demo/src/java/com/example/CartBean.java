@@ -144,10 +144,7 @@ public class CartBean {
         return "cart_page.xhtml?faces-redirect=true";
     }
 
-    // Method to redirect to the main page
-    public String goBacktoPage() {
-        return "index.xhtml?faces-redirect=true";
-    }
+    
 
     // Method to redirect to the payment page
     public String goPaymentPage() {

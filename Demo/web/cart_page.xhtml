@@ -15,14 +15,14 @@
     </h:head>
     <h:body>
         <h:form id="myForm2"> 
-            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{cartBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{userBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
                               font-size: 15px;
                               color:black;
                               background-color:antiquewhite ;
                               border-radius: 20px;" />
 
 
-            <p:dataScroller value="#{cartBean.selectedItems}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
+            <p:dataScroller value="#{userBean.cartProducts}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
                 <div class="product">
                     <div class="product-list-item p-5">
                         <div class="product-image image-shadow">
@@ -62,14 +62,13 @@
                 </div>
             </p:dataScroller>
             <div class="product-empty">
-                <h:outputLabel rendered="#{empty cartBean.selectedItems}">
+                <h:outputLabel rendered="#{empty userBean.cartProducts}">
                     <i class="pi pi-shopping-cart" style="color: burlywood; font-size: 3em;"></i>
                 </h:outputLabel>               
-                <h:outputText value="Sepetin şuan boş!" rendered="#{empty cartBean.selectedItems}" styleClass="custom-empty-text" />
+                <h:outputText value="Sepetin şuan boş!" rendered="#{empty userBean.cartProducts}" styleClass="custom-empty-text" />
                 <h:outputText value="Sepetini Hepsiburada’nın fırsatlarla dolu dünyasından doldurmak için
-                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty cartBean.selectedItems}" styleClass="custom-empty-desc" />
+                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty userBean.cartProducts}" styleClass="custom-empty-desc" />
             </div>
-
 
 
             <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; background-color: bisque; padding: 10px; border-radius: 5px;">

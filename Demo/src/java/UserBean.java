@@ -1,7 +1,11 @@
 
+import com.example.ProductModel;
 import java.io.Serializable;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @SessionScoped
@@ -42,6 +46,42 @@ public class UserBean implements Serializable {
         // Terminate the user session
         loggedIn = false;
         return "login_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
+    }
+
+    public void addCart(ProductModel product) throws ClassNotFoundException {
+        DatabaseBean databaseBean = new DatabaseBean();
+        List<ProductModel> cartProducts = databaseBean.getProductInList(username);
+
+        try {
+
+            // Check if the product is already in the user's cart before adding it
+            for (ProductModel cartProduct : cartProducts) {
+                if (cartProduct.getId() == product.getId()) {
+                    int newQuantity = cartProduct.getQuantity() + 1;
+
+                    // Product is already in the cart, show a message and return without adding it again
+                    databaseBean.updateCartProductQuantity(username, cartProduct.getId(), newQuantity);
+                    return;
+                }
+            }
+
+            // If the product is not already in the cart, add it
+            databaseBean.addProductToCart(username, product.getId(), product.getQuantity());
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product added to cart.", null));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error adding product to cart.", null));
+        }
+    }
+
+    public List<ProductModel> getCartProducts() throws ClassNotFoundException {
+        DatabaseBean databaseBean = new DatabaseBean();
+        return databaseBean.getProductInList(username);
+    }
+
+    // Method to redirect to the main page
+    public String goBacktoPage() {
+        return "index.xhtml?faces-redirect=true";
     }
 
     public String returnRegister() {

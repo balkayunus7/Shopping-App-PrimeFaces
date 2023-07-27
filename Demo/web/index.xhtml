@@ -13,11 +13,13 @@
     <h:body>
         <h:form id="myForm"> 
             <p:growl id="messages" showDetail="true" /> 
-         
-            <p:commandButton  value="Logout"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
-                              background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
-            <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left: 1480px;color:black;border-color: activecaption;
-                              background-color:antiquewhite ;" update=":myForm" action="#{cartBean.goToPage()}"   />
+            
+            <div class=" product-list-item  custom-empty-text ">
+                <p:commandButton  value="Logout"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
+                                  background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
+                <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-left: 1480px;color:black;border-color: activecaption;
+                                  background-color:antiquewhite ;" update=":myForm" action="#{cartBean.goToPage()}"   />          
+            </div>
             <p:dataTable id="dtPersona" value="#{databaseBean.product}" var="product" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
                 <p:column  headerText="NAME"  styleClass="custom-text">
@@ -38,12 +40,12 @@
                 </p:column>
 
                 <p:column headerText="IMAGE"  styleClass="custom-text">
-                    <p:graphicImage value="#{product.imagePath}" alt="No Image"  style="width: 200px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
+                    <p:graphicImage value="#{product.imagePath}" alt="No Image"  style="width: 220px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
                 </p:column>
 
                 <p:column> 
-                    <p:commandButton   icon="pi pi-align-justify" actionListener="#{cartBean.view(p)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin:20px;background-color: background;"/>
-                    <p:commandButton  icon="pi pi-plus" actionListener="#{cartBean.addCart(p)}"  update= ":myForm " style="color: black;margin:20px;background-color: background"/>
+                    <p:commandButton   icon="pi pi-align-justify" actionListener="#{databaseBean.viewProduct(product)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin:20px;background-color: background;"/>
+                    <p:commandButton  icon="pi pi-plus" actionListener="#{userBean.addCart(product)}"  update= ":myForm " style="color: black;margin:20px;background-color: background"/>
                 </p:column>
 
             </p:dataTable> 
@@ -52,31 +54,32 @@
 
 
 
+        
 
-        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog" resizable="false" modal="true" styleClass="custom-dialog" style="background-color: bisque;">
+        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog" resizable="false" modal="true" width="540" height="700" styleClass="custom-dialog" style="background-color: bisque;">
             <h:form id="viewForm"> 
                 <p:growl id="msgs" showDetail="true" /> 
                 <p:messages />
 
-                <p:graphicImage value="#{cartBean.selectedProduct.imagePath}" alt="No Image" style="margin-left: 30px" width="345px" height="432"/>
+                <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="No Image" style="margin-left: 30px" width="380px" height="440"/>
 
                 <h:panelGrid columns="2" style="margin: 40px" >
                     <h:outputLabel for="viewName" value="Name:" styleClass="custom-text"/>
-                    <h:outputText id="viewName" value="#{cartBean.selectedProduct.name}"  styleClass="custom-dialog-text" />
+                    <h:outputText id="viewName" value="#{databaseBean.selectedProduct.name}"  styleClass="custom-dialog-text" />
 
                     <h:outputLabel for="viewPrice" value="Price:" styleClass="custom-text"/>
-                    <h:outputText id="viewPrice" value="#{cartBean.selectedProduct.price}£" styleClass="custom-dialog-text"/>
+                    <h:outputText id="viewPrice" value="#{databaseBean.selectedProduct.price}£" styleClass="custom-dialog-text"/>
 
                     <h:outputLabel for="viewQuantity" value="Detail:" styleClass="custom-text"/>
-                    <h:outputText id="viewQuantity" value="#{cartBean.selectedProduct.description}" styleClass="custom-dialog-text" />
+                    <h:outputText id="viewQuantity" value="#{databaseBean.selectedProduct.description}" styleClass="custom-dialog-text" />
 
                     <h:outputLabel for="viewRating" value="Rating:"  styleClass="custom-text" />
-                    <h:outputText  id="viewRating" styleClass="custom-dialog-text" value="#{cartBean.selectedProduct.rating}*"/>
+                    <h:outputText  id="viewRating" styleClass="custom-dialog-text" value="#{databaseBean.selectedProduct.rating}*"/>
                 </h:panelGrid>
 
                 <p:column>
                     <p:commandButton value="Add Cart"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
-                                     background-color:antiquewhite ;" update=":myForm"  actionListener="#{cartBean.addCart(cartBean.selectedProduct)}" styleClass="custom-button" />
+                                     background-color:antiquewhite ;" update=":myForm"  actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" styleClass="custom-button" />
                 </p:column>
             </h:form>
         </p:dialog>
