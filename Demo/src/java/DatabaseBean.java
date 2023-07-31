@@ -1,5 +1,6 @@
 
 import com.example.ProductModel;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import java.sql.*;
@@ -9,7 +10,7 @@ import javax.faces.bean.ApplicationScoped;
 
 @ManagedBean
 @ApplicationScoped
-public class DatabaseBean {
+public class DatabaseBean implements  Serializable{
 
     String url = "jdbc:postgresql://localhost:5432/shopme";
     String dbUsername = "postgres";
@@ -190,25 +191,41 @@ public class DatabaseBean {
             Class.forName("org.postgresql.Driver");
 
             try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                // SQL query to retrieve products for a specific user
-                String query = "SELECT p.* FROM products p INNER JOIN user_products up ON p.id = up.product_id WHERE up.username = ?";
+                // SQL query to retrieve products for a specific user from the products table
+                String productQuery = "SELECT p.* FROM products p INNER JOIN user_products up ON p.id = up.product_id WHERE up.username = ?";
 
-                try (PreparedStatement statement = connection.prepareStatement(query)) {
+                try (PreparedStatement productStatement = connection.prepareStatement(productQuery)) {
                     // Set the username parameter in the SQL query
-                    statement.setString(1, username);
+                    productStatement.setString(1, username);
 
-                    try (ResultSet resultSet = statement.executeQuery()) {
+                    try (ResultSet productResultSet = productStatement.executeQuery()) {
                         // Loop through the query results and create ProductModel objects
                         // to represent each product in the user's cart
-                        while (resultSet.next()) {
+                        while (productResultSet.next()) {
                             ProductModel product = new ProductModel();
-                            product.setId(resultSet.getInt("id"));
-                            product.setName(resultSet.getString("name"));
-                            product.setPrice(resultSet.getInt("price"));
-                            product.setRating(resultSet.getDouble("rating"));
-                            product.setQuantity(resultSet.getInt("quantity"));
-                            product.setImagePath(resultSet.getString("imagePath"));
-                            product.setDescription(resultSet.getString("description"));
+                            product.setId(productResultSet.getInt("id"));
+                            product.setName(productResultSet.getString("name"));
+                            product.setPrice(productResultSet.getInt("price"));
+                            product.setRating(productResultSet.getDouble("rating"));
+                            product.setImagePath(productResultSet.getString("imagePath"));
+                            product.setDescription(productResultSet.getString("description"));
+
+                            // Now, get the quantity value from a different table with a separate query
+                            String quantityQuery = "SELECT quantity FROM user_products WHERE username = ? AND product_id = ?";
+                            try (PreparedStatement quantityStatement = connection.prepareStatement(quantityQuery)) {
+                                quantityStatement.setString(1, username);
+                                quantityStatement.setInt(2, product.getId());
+                                try (ResultSet quantityResultSet = quantityStatement.executeQuery()) {
+                                    if (quantityResultSet.next()) {
+                                        int quantity = quantityResultSet.getInt("quantity");
+                                        product.setQuantity(quantity);
+                                    } else {
+                                        // If no quantity is found in the other table, set default quantity to 1 or any other desired value
+                                        product.setQuantity(1);
+                                    }
+                                }
+                            }
+
                             cartProducts.add(product);
                         }
                     }
@@ -222,4 +239,26 @@ public class DatabaseBean {
         // Return the list of products in the user's cart
         return cartProducts;
     }
+    
+    
+
+    public void updateProductQuantity(String username, int productId, int newQuantity) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+                String query = "UPDATE user_products SET quantity = ? WHERE username = ? AND product_id = ?";
+
+                try (PreparedStatement statement = connection.prepareStatement(query)) {
+                    statement.setInt(1, newQuantity);
+                    statement.setString(2, username);
+                    statement.setInt(3, productId);
+
+                    statement.executeUpdate();
+                }
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

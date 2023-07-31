@@ -1,6 +1,9 @@
 package com.example;
+
+import java.util.Objects;
+
 public class ProductModel {
-    
+
     private int id;
     private String name;
     private int price;
@@ -8,7 +11,6 @@ public class ProductModel {
     private double rating;
     private String imagePath;
     private String description;
-
 
     public int getId() {
         return id;
@@ -66,4 +68,21 @@ public class ProductModel {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ProductModel that = (ProductModel) o;
+        return id == that.id;
+    }
+
+    // hashCode metodunu da id özelliğine göre override ediyoruz
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

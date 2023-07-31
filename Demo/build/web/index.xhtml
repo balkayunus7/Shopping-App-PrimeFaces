@@ -15,32 +15,32 @@
             <p:growl id="messages" showDetail="true" /> 
 
             <div class=" product-list-item  custom-empty-text ">
-                <p:commandButton  value="Logout"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
+                <p:commandButton  value="Çıkış Yap"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
                                   background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
-                <p:commandButton  value="Go to Cart"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-left: 1480px;color:black;border-color: activecaption;
+                <p:commandButton  value="Sepete Git"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-left: 1480px;color:black;border-color: activecaption;
                                   background-color:antiquewhite ;" update=":myForm" action="#{cartBean.goToPage()}"   />          
             </div>
             <p:dataTable id="dtPersona" value="#{databaseBean.product}" var="product" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
-                <p:column  headerText="NAME"  styleClass="custom-text">
+                <p:column  headerText="ÜRÜN ADI"  styleClass="custom-text">
                     <p:outputLabel  value="${product.name}"  styleClass="custom-text" style="font-size: 20px" />
                 </p:column>
 
-                <p:column headerText="PRICE"   styleClass="custom-text" >
+                <p:column headerText="FİYAT"   styleClass="custom-text" >
                     <p:outputLabel value="£${product.price} "  style="font-size: 20px" />
                 </p:column>
 
-                <p:column headerText="DETAILS"   styleClass="custom-text" >
+                <p:column headerText="DETAYLAR"   styleClass="custom-text" >
                     <p:outputLabel value="${product.description}"  style="font-size: 20px" />  
                 </p:column>
 
-                <p:column headerText="RATING"  styleClass="custom-text">
+                <p:column headerText="PUAN"  styleClass="custom-text">
                     <p:outputLabel value="${product.rating}" style="font-size: 20px"/>
                     <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
                 </p:column>
 
-                <p:column headerText="IMAGE"  styleClass="custom-text">
-                    <p:graphicImage value="#{product.imagePath}" alt="No Image"  style="width: 220px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
+                <p:column headerText="GÖRSEL"  styleClass="custom-text">
+                    <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 220px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
                 </p:column>
 
                 <p:column> 
@@ -50,38 +50,33 @@
 
             </p:dataTable> 
         </h:form>
+        <h:form id="viewForm"> 
+            <p:dialog id="dlgViewPersona" header="Ürün Detayları" widgetVar="viewDialog"  modal="true" width="540"  styleClass="custom-dialog" style="background-color: bisque;">
 
-
-
-
-
-
-        <p:dialog id="dlgViewPersona" header="Product Details" widgetVar="viewDialog"  modal="true" width="540" height="700" styleClass="custom-dialog" style="background-color: bisque;">
-            <h:form id="viewForm"> 
                 <p:growl id="msgs" showDetail="true" /> 
                 <p:messages />
 
-                <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="No Image" style="margin-left: 30px" width="380px" height="440"/>
+                <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="Resim Yok" style="margin-left: 30px" width="380px" height="400"/>
 
                 <h:panelGrid columns="2" style="margin: 40px" >
-                    <h:outputLabel for="viewName" value="Name:" styleClass="custom-text"/>
+                    <h:outputLabel for="viewName" value="Ürün Adı:" styleClass="custom-text"/>
                     <h:outputText id="viewName" value="#{databaseBean.selectedProduct.name}"  styleClass="custom-dialog-text" />
 
-                    <h:outputLabel for="viewPrice" value="Price:" styleClass="custom-text"/>
+                    <h:outputLabel for="viewPrice" value="Fiyat:" styleClass="custom-text"/>
                     <h:outputText id="viewPrice" value="#{databaseBean.selectedProduct.price}£" styleClass="custom-dialog-text"/>
 
-                    <h:outputLabel for="viewQuantity" value="Detail:" styleClass="custom-text"/>
+                    <h:outputLabel for="viewQuantity" value="Detaylar:" styleClass="custom-text"/>
                     <h:outputText id="viewQuantity" value="#{databaseBean.selectedProduct.description}" styleClass="custom-dialog-text" />
 
-                    <h:outputLabel for="viewRating" value="Rating:"  styleClass="custom-text" />
+                    <h:outputLabel for="viewRating" value="Puan:"  styleClass="custom-text" />
                     <h:outputText  id="viewRating" styleClass="custom-dialog-text" value="#{databaseBean.selectedProduct.rating}*"/>
                 </h:panelGrid>
 
                 <p:column>
-                    <p:commandButton value="Add Cart"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
+                    <p:commandButton value="Sepete Ekle"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
                                      background-color:antiquewhite ;" update=":myForm"  actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" styleClass="custom-button" />
                 </p:column>
-            </h:form>
-        </p:dialog>
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>

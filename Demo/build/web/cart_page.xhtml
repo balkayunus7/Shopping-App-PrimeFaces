@@ -21,8 +21,8 @@
                               background-color:antiquewhite ;
                               border-radius: 20px;" />
 
-
-            <p:dataScroller value="#{userBean.cartProducts}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
+            <p:remoteCommand name="updateDataScroller" update="dataScroller5" />
+            <p:dataScroller id="dataScroller5" value="#{userBean.cartProductsList}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
                 <div class="product">
                     <div class="product-list-item p-5">
                         <div class="product-image image-shadow">
@@ -40,7 +40,7 @@
                                 <h:outputText value="#{item.description}" />
                             </div>
                             <div class="product-info-left  custom-cart-text-desc">
-                                <p:inputText readonly="true"  id="float-input" value="#{item.quantity}"/>
+                                <p:inputText readonly="true"  id="float-input" value="#{item.quantity}"  />
                             </div>
                         </div>
                         <div class="product-list-detail">
@@ -53,8 +53,8 @@
                             </div>
 
                             <div class="product-list-detail">
-                                <p:commandButton icon="pi pi-minus-circle"  actionListener=" " style="margin-left:530px;margin-right: 10px"    update="myForm2"  />
-                                <p:commandButton icon="pi pi-plus-circle"  actionListener=" " style="margin-right: 10px"    update="myForm2"  />
+                                <p:commandButton icon="pi pi-minus-circle"  actionListener="#{userBean.decreaseCart(item)}" style="margin-left:530px;margin-right: 10px"    update="myForm2  float-input"  />
+                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{userBean.addCart(item)}" style="margin-right: 10px"    update="myForm2  float-input"  />
                                 <p:commandButton icon="pi pi-trash"  actionListener="#{userBean.removeProduct(item)}" style="margin-right: 10px"  update="myForm2" />
                             </div>
                         </div>
@@ -62,12 +62,12 @@
                 </div>
             </p:dataScroller>
             <div class="product-empty">
-                <h:outputLabel rendered="#{empty userBean.cartProducts}">
+                <h:outputLabel rendered="#{empty userBean.cartProductsList}">
                     <i class="pi pi-shopping-cart" style="color: burlywood; font-size: 3em;"></i>
                 </h:outputLabel>               
-                <h:outputText value="Sepetin şuan boş!" rendered="#{empty userBean.cartProducts}" styleClass="custom-empty-text" />
+                <h:outputText value="Sepetin şuan boş!" rendered="#{empty userBean.cartProductsList}" styleClass="custom-empty-text" />
                 <h:outputText value="Sepetini Hepsiburada’nın fırsatlarla dolu dünyasından doldurmak için
-                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty userBean.cartProducts}" styleClass="custom-empty-desc" />
+                              aşağıdaki ürünleri incelemeye başlayabilirsin.." rendered="#{empty userBean.cartProductsList}" styleClass="custom-empty-desc" />
             </div>
 
 
