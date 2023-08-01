@@ -3,14 +3,11 @@ import com.example.ProductModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 
-@Named
 @ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
@@ -19,7 +16,6 @@ public class UserBean implements Serializable {
     private String password;
     private String email;
     private boolean loggedIn;
-    List<ProductModel> cartProductsList = new ArrayList<>();
     private int newQuantity;
 
     // Method to register the user
@@ -56,6 +52,7 @@ public class UserBean implements Serializable {
 
     public void addCart(ProductModel product) throws ClassNotFoundException {
         DatabaseBean databaseBean = new DatabaseBean();
+        List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
 
         // Check if the product is already in the cart
         for (ProductModel cartProduct : cartProductsList) {
@@ -69,7 +66,7 @@ public class UserBean implements Serializable {
                 } catch (Exception e) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error updating product quantity in cart.", null));
                 }
-                System.out.println("Added product '" + cartProduct.getName() + "' with quantity: " + cartProduct.getQuantity());
+                //   System.out.println("Added product '" + cartProduct.getName() + "' with quantity: " + cartProduct.getQuantity());
                 return; // Exit the method after updating the quantity
             }
         }
@@ -90,16 +87,16 @@ public class UserBean implements Serializable {
         return databaseBean.getProductInList(username);
     }
 
-    
     public void decreaseCart(ProductModel product) throws ClassNotFoundException {
+
         DatabaseBean databaseBean = new DatabaseBean();
-        System.out.println("girişte");
+        List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
 
         // Find the product in the cart
         for (ProductModel cartProduct : cartProductsList) {
             System.out.println("fora girdi");
             if (cartProduct.equals(product)) {
-                System.out.println(cartProduct.getName()+cartProduct.getQuantity());
+                System.out.println(cartProduct.getName() + cartProduct.getQuantity());
                 int newDecQuantity = cartProduct.getQuantity() - 1;
 
                 if (newDecQuantity > 0) {
@@ -128,7 +125,7 @@ public class UserBean implements Serializable {
             }
         }
     }
-    
+
     public void removeProduct(ProductModel product) {
         try {
             DatabaseBean databaseBean = new DatabaseBean();

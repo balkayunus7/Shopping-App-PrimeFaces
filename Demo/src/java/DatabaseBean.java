@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 
+
 @ManagedBean
 @ApplicationScoped
 public class DatabaseBean implements  Serializable{

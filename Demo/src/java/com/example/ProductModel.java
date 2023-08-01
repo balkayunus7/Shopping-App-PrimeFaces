@@ -76,11 +76,11 @@ public class ProductModel {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ProductModel that = (ProductModel) o;
-        return id == that.id;
+        ProductModel product = (ProductModel) o;
+        return id == product.id;
     }
 
-    // hashCode metodunu da id özelliğine göre override ediyoruz
+    // Override hashCode method to generate hash code based on the product id
     @Override
     public int hashCode() {
         return Objects.hash(id);
