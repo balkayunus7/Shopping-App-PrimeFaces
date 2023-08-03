@@ -6,7 +6,7 @@ public class ProductModel {
 
     private int id;
     private String name;
-    private int price;
+    private double price;
     private int quantity;
     private double rating;
     private String imagePath;
@@ -32,7 +32,7 @@ public class ProductModel {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

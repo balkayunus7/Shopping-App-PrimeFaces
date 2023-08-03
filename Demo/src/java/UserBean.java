@@ -1,4 +1,5 @@
 
+import com.example.OrderModel;
 import com.example.ProductModel;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 @ManagedBean
 @SessionScoped
@@ -17,6 +19,7 @@ public class UserBean implements Serializable {
     private String email;
     private boolean loggedIn;
     private int newQuantity;
+    RoutingBean router = new RoutingBean();
 
     // Method to register the user
     public String register() {
@@ -37,9 +40,9 @@ public class UserBean implements Serializable {
         DatabaseBean databaseBean = new DatabaseBean();
         loggedIn = databaseBean.loginUser(username, password);
         if (loggedIn) {
-            return "index.xhtml"; // If login is successful, redirect to the personalized user page (index.xhtml)
+            return router.goBacktoPage(); // If login is successful, redirect to the personalized user page (index.xhtml)
         } else {
-            return "login_page.xhtml"; // If login fails, redirect back to the login page (login_page.xhtml)
+            return router.returnLogin(); // If login fails, redirect back to the login page (login_page.xhtml)
         }
     }
 
@@ -47,7 +50,7 @@ public class UserBean implements Serializable {
     public String logout() {
         // Terminate the user session
         loggedIn = false;
-        return "login_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
+        return router.returnLogin(); // After logging out, redirect to the login page (login_page.xhtml)
     }
 
     public void addCart(ProductModel product) throws ClassNotFoundException {
@@ -84,6 +87,7 @@ public class UserBean implements Serializable {
 
     public List<ProductModel> getCartProductsList() throws ClassNotFoundException {
         DatabaseBean databaseBean = new DatabaseBean();
+        // Call the getProductInList method of the DatabaseBean class to retrieve the cart products for the given username
         return databaseBean.getProductInList(username);
     }
 
@@ -94,13 +98,11 @@ public class UserBean implements Serializable {
 
         // Find the product in the cart
         for (ProductModel cartProduct : cartProductsList) {
-            System.out.println("fora girdi");
             if (cartProduct.equals(product)) {
                 System.out.println(cartProduct.getName() + cartProduct.getQuantity());
                 int newDecQuantity = cartProduct.getQuantity() - 1;
 
                 if (newDecQuantity > 0) {
-                    System.out.println("Azaltmaya girdiiiiii");
                     // Decrement the quantity and update the database
                     cartProduct.setQuantity(newDecQuantity);
                     try {
@@ -129,6 +131,8 @@ public class UserBean implements Serializable {
     public void removeProduct(ProductModel product) {
         try {
             DatabaseBean databaseBean = new DatabaseBean();
+
+            // Call the removeProductFromCart method of the DatabaseBean class to remove the product from the cart in the database
             databaseBean.removeProductFromCart(username, product.getId());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product removed from cart.", null));
         } catch (Exception e) {
@@ -136,17 +140,26 @@ public class UserBean implements Serializable {
         }
     }
 
-    // Method to redirect to the main page
-    public String goBacktoPage() {
-        return "index.xhtml?faces-redirect=true";
+    public double calculateTotalPrice() throws ClassNotFoundException {
+        double totalPrice = 0.0;
+        DatabaseBean databaseBean = new DatabaseBean();
+        List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
+
+        // Calculate the total price by summing up the price of each product multiplied by its quantity
+        for (ProductModel cartProduct : cartProductsList) {
+            totalPrice += cartProduct.getPrice() * cartProduct.getQuantity();
+        }
+        return totalPrice;
     }
 
-    public String returnRegister() {
-        return "register_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
-    }
-
-    public String returnLogin() {
-        return "login_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
+    // Getter method for the total price
+    public double getTotalPrice() {
+        try {
+            return calculateTotalPrice();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return 0.0;
+        }
     }
 
     // Getter and Setter methods for the properties
@@ -172,6 +185,61 @@ public class UserBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String createOrderUser() {
+
+        try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
+            int orderId = databaseBean.createOrder(username, getTotalPrice());
+
+            for (ProductModel cartProduct : cartProductsList) {
+                databaseBean.addOrderItem(orderId, cartProduct.getId(), cartProduct.getQuantity());
+            }
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error creating order.", null));
+        }
+        return router.goBacktoPage();
+
+    }
+
+    public List<OrderModel> getUserOrders() {
+        try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            return databaseBean.getOrdersByUsername(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Return an empty list in case of an error
+        }
+    }
+
+    public List<ProductModel> getOrderItemsForOrderId(int orderId) {
+        try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            return databaseBean.getOrderItemsForOrder(orderId, newQuantity);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return new ArrayList<>(); // Return an empty list in case of an error
+        }
+    }
+
+    private List<ProductModel> selectedOrderItems;
+
+    // Getter method for selectedOrderItems
+    public List<ProductModel> getSelectedOrderItems() {
+        return selectedOrderItems;
+    }
+
+    // Method to view the order items for a specific order ID
+    public void viewOrderItems(int orderId) {
+        // Retrieve the order items for the given order ID using getOrderItemsForOrderId method
+
+        selectedOrderItems = getOrderItemsForOrderId(orderId);
+
+        // Show the dialog with the order items
+        PrimeFaces.current().executeScript("PF('orderItemsDialog').show();");
     }
 
 }

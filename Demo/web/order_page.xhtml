@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"                    >
+
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+        <h:outputStylesheet name="css/custom-image.css"/>
+        <h:outputStylesheet name="css/product-list.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="myForm2"> 
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{routingBean.goBacktoPage()}"  style="margin-bottom: 30px;  font-weight: bold;
+                              font-size: 15px;
+                              color:black;
+                              background-color:antiquewhite ;
+                              border-radius: 20px;" />
+
+
+            <p:dataScroller id="dataScroller7" value="#{userBean.userOrders}" var="order" mode="inline" chunkSize="30" style="margin: 20px;">
+                <div class="product">
+                    <div class="product-list-item p-5">
+
+                        <div class="product-list-detail">
+                            <div class="product-info-left  custom-cart-text " >
+                                <h:outputText value="PRODUCT  ORDER"/>
+                            </div>
+                            <div class="product-info-left  custom-cart-text-desc">
+                                <h:outputText  value="Order Details"/>
+                            </div>
+                            <div class="product-info-left">
+                                <div class="product-list-item p-5">
+                                    <h:outputText style="margin-left:20px;font-size:30px;color: black;font-weight: 700"  value="Order Price:  #{order.total_price}"/>
+                                    <i class="pi pi-dollar" style="margin-right:10px;margin-top:6px;font-size: 2rem;color:green"></i>
+                                </div>
+
+                            </div>
+                            <div class="product-list-item p-5  custom-empty-desc" style="margin-top:20px;margin-bottom: 15px;margin-left: 25px">
+                                <i class="pi pi-user" style="margin-right:10px;color: blue"></i>
+                                <h:outputText  value="Username : #{order.username}"/>
+                            </div>
+                            <div class="product-info-left  custom-cart-text-desc">
+                                <h:outputText  value="Date Added:" style="margin-bottom:7px"/>
+                                <p:inputText readonly="true" size="15"  id="float-input" value="0#{order.createdAt.day}/0#{order.createdAt.month}/2023  #{order.createdAt.hours}.#{order.createdAt.minutes}" />
+                            </div>
+                        </div>
+                        <h:commandButton  value="View Order Items"  style="font-size:17px;font-weight: bold;margin-top:20px;margin-left: 800px;color:black;padding: 17px;border-radius: 10px;
+                                          background-color:antiquewhite ;"  action="#{userBean.viewOrderItems(order.id)}"   />    
+                    </div>
+                </div> 
+
+            </p:dataScroller>
+            <style>
+                .product {
+                    border-bottom: 2px solid #333;
+                    padding-bottom: 20px;
+                    margin-bottom: 20px;
+
+                }
+
+                .ui-datascroller {
+                    border: 1px solid #333;
+                }
+
+                .ui-datascroller .ui-state-active {
+                    border-color: #007bff;
+                    background-color: #007bff;
+                    color: #fff;
+                }
+            </style>
+
+            <p:dialog id="orderItemsDialog" header="Order Items" widgetVar="orderItemsDialog" height="700"   modal="true" >
+                <h:dataTable value="#{userBean.selectedOrderItems}" var="orderItem" >
+                    <h:column>
+                        <p:outputLabel value="Product Name: #{orderItem.name}"  styleClass="custom-cart-text" style="color: crimson;font-size: 20px"/>
+                    </h:column>
+                    <h:column>
+                        <p:inputText readonly="true" size="1"  id="float-input"  value="#{orderItem.quantity}" styleClass="custom-cart-text" style="font-size: 20px"/>
+                    </h:column>
+                    <h:column>
+                        <p:outputLabel value="#{orderItem.rating}" style="margin-left:20px;" styleClass="custom-text"/>
+                        <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
+                    </h:column>
+                    <h:column>  
+                        <p:graphicImage value="#{orderItem.imagePath}" alt="Resim Yok"  style="width: 220px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
+                    </h:column>
+
+                    <h:column>
+                        <p:outputLabel value="#{orderItem.price}" style="margin-left:20px;font-size: 40px;color: black;font-weight: 700"/>
+                        <i class="pi pi-dollar" style="margin-right:10px;font-size: 2rem;color:green"></i>
+                    </h:column>
+                </h:dataTable>
+            </p:dialog>
+
+        </h:form>
+
+    </h:body>
+</html>

@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="product-info-left  custom-login-text">
-                        <p:inputText value="#{userBean.username}"  size="35" required="true" style="margin-bottom: 15px" placeholder="Username:"   id="username"  />
+                        <p:inputText value="#{userBean.username}"  size="35"  style="margin-bottom: 15px" placeholder="Username:"   id="username"  />
                     </div>
                     <div class="product-info-left  custom-login-text">
                         <p:password value="#{userBean.password}" feedback="true" placeholder="Password" size="35" promptLabel="Password" />
@@ -36,7 +36,7 @@
                     </div>
                     <div class="product-list-item    custom-empty-desc">
                         <h:outputText style="margin-left: 50px;margin-top: 20px;margin-bottom:  20px;font-size: 17px" value="Don't have an account"/>
-                        <p:commandLink style="margin-left: 10px; margin-top: 20px; margin-bottom: 20px;" action="#{userBean.returnRegister()}">
+                        <p:commandLink style="margin-left: 10px; margin-top: 20px; margin-bottom: 20px;" action="#{routingBean.returnRegister()}">
                             <p:outputLabel value="Sign Up" style=" font-size: 17px; color: blue" />
                         </p:commandLink>
 

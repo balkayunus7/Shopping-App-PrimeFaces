@@ -15,7 +15,7 @@
     </h:head>
     <h:body>
         <h:form id="myForm2"> 
-            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{userBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
+            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{routingBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
                               font-size: 15px;
                               color:black;
                               background-color:antiquewhite ;
@@ -44,8 +44,10 @@
                             </div>
                         </div>
                         <div class="product-list-detail">
-                            <div class="product-info  custom-cart-text-price ">
-                                <h:outputText value="£#{item.price}"/>
+                            <div class=" custom-cart-text-price " style="margin-left: 500px">
+                                <h:outputText value="#{item.price}"/>
+                                <i class="pi pi-dollar" style="margin-right:10px;font-size: 2rem;color:green"></i>
+
                             </div>
                             <div class="product-list-detail  custom-cart-text-rating ">
                                 <h:outputText  value="#{item.rating}"/>
@@ -72,8 +74,8 @@
 
 
             <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; background-color: bisque; padding: 10px; border-radius: 5px;">
-                <h:outputText id="totalPriceDisplay" value="Total Price: £#{cartBean.totalPrice}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
-                <p:commandButton icon="pi pi-credit-card" action="#{cartBean.goPaymentPage()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
+                <h:outputText id="totalPriceDisplay" value="Total Price: £#{userBean.calculateTotalPrice()}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
+                <p:commandButton icon="pi pi-credit-card" action="#{routingBean.returnPayment()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
             </p:outputPanel>
 
         </h:form>

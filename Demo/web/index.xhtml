@@ -18,7 +18,9 @@
                 <p:commandButton  value="Çıkış Yap"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
                                   background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
                 <p:commandButton  value="Sepete Git"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-left: 1480px;color:black;border-color: activecaption;
-                                  background-color:antiquewhite ;" update=":myForm" action="#{cartBean.goToPage()}"   />          
+                                  background-color:antiquewhite ;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
+                <p:commandButton  value="Siparişleri Görüntüle"  icon="pi pi-tags"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top:20px;margin-left: 1480px;color:black;border-color: activecaption;
+                                  background-color:antiquewhite ;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
             </div>
             <p:dataTable id="dtPersona" value="#{databaseBean.product}" var="product" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
@@ -27,7 +29,7 @@
                 </p:column>
 
                 <p:column headerText="FİYAT"   styleClass="custom-text" >
-                    <p:outputLabel value="£${product.price} "  style="font-size: 20px" />
+                    <p:outputLabel value="$${product.price} "  style="font-size: 20px" />
                 </p:column>
 
                 <p:column headerText="DETAYLAR"   styleClass="custom-text" >

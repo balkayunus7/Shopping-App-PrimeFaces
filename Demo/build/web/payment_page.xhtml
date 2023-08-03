@@ -52,7 +52,7 @@
                             <h:outputText value="Kredi Kartı Bilgilerimin kaydedilmesini Onaylıyorum." style="margin-top: 15px;margin-right: 8px" />
                             <h:outputText value="Masterpass Nedir?" style="color:blue;margin-top: 15px" />
                         </div> 
-                        <p:commandButton  action="#{authBean.returnMain()}"  value="Pay:#{cartBean.totalPrice} £"  styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 20px; margin-left: 160px;margin-top: 20px" />
+                        <p:commandButton  action="#{userBean.createOrderUser()}"  value="Pay:#{userBean.calculateTotalPrice()} £"  styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 20px; margin-left: 160px;margin-top: 20px" />
                     </div>
                     <p:graphicImage value="/resources/images/myimage.png" alt="My Image"/>
                 </div>
