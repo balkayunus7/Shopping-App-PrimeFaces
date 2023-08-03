@@ -40,7 +40,7 @@ Payment screen where you can enter card number, name on card, expiry date, cvc i
 
 The order page keeps the orders paid before on the payment screen
 
-![Ekran Görüntüsü (13)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/bef467f4-9ce0-4aee-93a2-e508a41db132)
+![Ekran Görüntüsü (15)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/4fda5f97-2fed-4000-a253-dc9ad4a75721)
 ![Ekran Görüntüsü (14)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/8752119c-3a4e-4ba7-bf15-a81d3ed9b451)
 
 
