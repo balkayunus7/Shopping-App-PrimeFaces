@@ -15,10 +15,10 @@ User can use main page to:
 2-View the details of the product
 
 3-Increase or decrease the number of products
-
-![Ekran Görüntüsü (10)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/f9e26740-2d51-47fc-a63f-f98abdc944ef)
+![Ekran Görüntüsü (16)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/e688d1a7-7754-4c97-acb4-535d7c9ba506)
+![Ekran Görüntüsü (17)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/1552b443-e0fe-4716-bdeb-405f0eeb95ba)
+![Ekran Görüntüsü (18)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/149e48be-66a3-46b9-84cf-e2e7bf1a529f)
 ![Ekran Görüntüsü (11)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/4fc40bca-251d-449c-821a-b088a3e480bb)
-![Ekran Görüntüsü (12)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/638f4235-8d56-4fde-a7cf-b78c363992af)
 
 
 User can use cart page to:
