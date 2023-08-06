@@ -18,7 +18,7 @@ User can use main page to:
 ![Ekran Görüntüsü (16)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/e688d1a7-7754-4c97-acb4-535d7c9ba506)
 ![Ekran Görüntüsü (17)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/1552b443-e0fe-4716-bdeb-405f0eeb95ba)
 ![Ekran Görüntüsü (18)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/149e48be-66a3-46b9-84cf-e2e7bf1a529f)
-![Ekran Görüntüsü (11)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/4fc40bca-251d-449c-821a-b088a3e480bb)
+![Ekran Görüntüsü (20)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/dd38eaeb-26d8-462a-a4fc-964a41469dcc)
 
 
 User can use cart page to:
@@ -30,8 +30,7 @@ User can use cart page to:
 3-Reducing the number of products
 
 4-Switch to the payment screen
-
-![Ekran Görüntüsü (8)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/e2d61897-431f-4f69-bfc0-7c60db4f172f)
+![Ekran Görüntüsü (21)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/b5e0743c-f613-4474-a6a5-9783be2d37b4)
 
 Payment screen where you can enter card number, name on card, expiry date, cvc information
 
