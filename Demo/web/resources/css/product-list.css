@@ -2,7 +2,9 @@
 .product-list-item {
     display: flex;
     align-items: flex-start;
+   
 }
+
 
 
 .product-list-detail {
@@ -34,4 +36,29 @@
     align-items: flex-end;
 }
 
+.product-list-item-new {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
 
+.product-list-detail-new {
+    width: 250px; /* İhtiyaca göre bu değeri ayarlayın */
+    margin: 10px; /* Ürünler arasında bir boşluk bırakın */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Resmi ortala ve gerektiğinde stilleri düzenleyin */
+.product-info-lefto p\\:graphicImage {
+    width: 220px;
+    height: 250px;
+    border-radius: 10px;
+}
+
+/* Her ürün bilgi bölümü arasında bir boşluk ekleyin */
+.product-info-lefto,
+.product-info-right {
+    margin-top: 10px;
+}

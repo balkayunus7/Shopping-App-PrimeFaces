@@ -15,11 +15,7 @@
     </h:head>
     <h:body>
         <h:form id="myForm2"> 
-            <p:commandButton  icon="pi pi-arrow-left" value="Back to Main Page"  action="#{routingBean.goBacktoPage()}" styleClass="custom-button"  style="margin-bottom: 30px;  font-weight: bold;
-                              font-size: 15px;
-                              color:black;
-                              background-color:antiquewhite ;
-                              border-radius: 20px;" />
+            <p:commandButton  icon="pi pi-arrow-left" action="#{routingBean.goBacktoPage()}"  style="color: black;background-color: #fff;border: #fff"    />
 
             <p:remoteCommand name="updateDataScroller" update="dataScroller5" />
             <p:dataScroller id="dataScroller5" value="#{userBean.cartProductsList}" var="item" mode="inline" chunkSize="30" style="margin: 20px;">
@@ -49,14 +45,12 @@
                                 <i class="pi pi-dollar" style="margin-right:10px;font-size: 2rem;color:green"></i>
 
                             </div>
-                            <div class="product-list-detail  custom-cart-text-rating ">
-                                <h:outputText  value="#{item.rating}"/>
-                                <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
-                            </div>
+                            <p:rating value="#{item.rating}" style="margin-left: 500px;margin-bottom: 70px" readonly="true"/>
+
 
                             <div class="product-list-detail">
                                 <p:commandButton icon="pi pi-minus-circle"  actionListener="#{userBean.decreaseCart(item)}" style="margin-left:530px;margin-right: 10px"    update="myForm2  float-input"  />
-                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{userBean.addCart(item)}" style="margin-right: 10px"    update="myForm2  float-input"  />
+                                <p:commandButton icon="pi pi-plus-circle"  actionListener="#{userBean.addCart(item)}" style="margin-right: 10px"    update="myForm2  float-input"  />                            
                                 <p:commandButton icon="pi pi-trash"  actionListener="#{userBean.removeProduct(item)}" style="margin-right: 10px"  update="myForm2" />
                             </div>
                         </div>
@@ -73,7 +67,7 @@
             </div>
 
 
-            <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; background-color: bisque; padding: 10px; border-radius: 5px;">
+            <p:outputPanel  style="position: fixed; bottom: 10px; right: 10px; padding: 10px; border-radius: 5px;">
                 <h:outputText id="totalPriceDisplay" value="Total Price: £#{userBean.calculateTotalPrice()}" style="margin-right: 20px; font-weight: bold; font-size: 16px;" />
                 <p:commandButton icon="pi pi-credit-card" action="#{routingBean.returnPayment()}"  value="Go to pay" styleClass="custom-button" style="color: white; font-weight: bold; border-radius: 5px; padding: 5px 10px; margin-top: 10px;" />
             </p:outputPanel>

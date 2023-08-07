@@ -8,7 +8,7 @@ public class ProductModel {
     private String name;
     private double price;
     private int quantity;
-    private double rating;
+    private int rating;
     private String imagePath;
     private String description;
 
@@ -44,11 +44,11 @@ public class ProductModel {
         this.quantity = quantity;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

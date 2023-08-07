@@ -2,56 +2,106 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      >
     <h:head>        
         <h:outputStylesheet name="css/custom-table.css" /> 
         <h:outputStylesheet name="css/custom-text.css" />
         <h:outputStylesheet name="css/custom-button.css"/> 
         <h:outputStylesheet name="css/custom-dialog-text.css"/>
         <h:outputStylesheet name="css/custom-dialog.css"/>
+        <h:outputStylesheet name="css/custom-icon-size.css"/>
+
     </h:head>
+
+
     <h:body>
+
         <h:form id="myForm"> 
             <p:growl id="messages" showDetail="true" /> 
 
             <div class=" product-list-item  custom-empty-text ">
-                <p:commandButton  value="Çıkış Yap"  icon="pi pi-user-minus"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top: 70px;margin-left:80px;color:black;border-color: activecaption;
-                                  background-color:antiquewhite ;" update=":myForm" action="#{userBean.logout()}"   />
-                <p:commandButton  value="Sepete Git"  icon="pi pi-shopping-cart"  iconPos="right" style="font-size:17px;font-weight: bold;margin-left: 1480px;color:black;border-color: activecaption;
-                                  background-color:antiquewhite ;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
-                <p:commandButton  value="Siparişleri Görüntüle"  icon="pi pi-tags"  iconPos="right" style="font-size:17px;font-weight: bold;margin-top:20px;margin-left: 1480px;color:black;border-color: activecaption;
-                                  background-color:antiquewhite ;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
+                <p:graphicImage url="https://cdn.wallpapersafari.com/98/5/78E3Lg.jpg" alt="Resim Yok"  style="width:150px;height:100px;"/>
+
+                <p:commandButton    icon="pi pi-user-minus"   iconPos="right" styleClass="custom-icon-size" style="background-color:white;
+                                    color:black;
+                                    border: #fff;" update=":myForm" action="#{userBean.logout()}"   />
+                <p:commandButton  icon="pi pi-shopping-cart"  iconPos="right" styleClass="custom-icon-size" style="margin-left: 1380px;  background-color:white;
+                                  color:black;
+                                  border: #fff;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
+                <p:commandButton    icon="pi pi-tags"  iconPos="right"  styleClass="custom-icon-size" style="margin-left: 10px;margin-bottom: 60px;  background-color:white;
+                                    color:black;
+                                    border: #fff;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
             </div>
-            <p:dataTable id="dtPersona" value="#{databaseBean.product}" var="product" style="margin: 45px;border-radius: 10px;border: 1px solid black;" >
 
-                <p:column  headerText="ÜRÜN ADI"  styleClass="custom-text">
-                    <p:outputLabel  value="${product.name}"  styleClass="custom-text" style="font-size: 20px" />
-                </p:column>
+            <p:carousel circular="true" paginator="false">
+                <p:tab>
+                    <div align="center">
+                        <h:outputText  value="TÜM YENİ ÇIKAN ÜRÜNLERİ İNCELE"  styleClass="custom-dialog-text" />
+                    </div>
+                </p:tab>
+                <p:tab>
+                    <div align="center">
+                        <h:outputText value="TÜRK İTHALAT MEVZUATI"  styleClass="custom-dialog-text" style="margin-right: 20px"/>
+                        <h:outputText  value="150 € üzeri siparişlerin teslimi garanti edilemiyor." style="margin-right: 20px"  />
+                        <h:outputText  value="Daha fazla bilgi" style="font-weight: bold"  />
 
-                <p:column headerText="FİYAT"   styleClass="custom-text" >
-                    <p:outputLabel value="$${product.price} "  style="font-size: 20px" />
-                </p:column>
+                    </div>
+                </p:tab>
 
-                <p:column headerText="DETAYLAR"   styleClass="custom-text" >
-                    <p:outputLabel value="${product.description}"  style="font-size: 20px" />  
-                </p:column>
+            </p:carousel>
 
-                <p:column headerText="PUAN"  styleClass="custom-text">
-                    <p:outputLabel value="${product.rating}" style="font-size: 20px"/>
-                    <i class="pi pi-star-fill" style="margin-right:10px;color: blue"></i>
-                </p:column>
+            <div >
+                <p:graphicImage value="/resources/images/main.png" alt="Resim Yok" width="1710" height="1000" style="margin-bottom: 70px"/>
+            </div>
 
-                <p:column headerText="GÖRSEL"  styleClass="custom-text">
-                    <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 220px;height: 250px;border: 1px solid activecaption;border-radius: 10px "/>
-                </p:column>
+            <div  style="flex-direction: row"  >
 
-                <p:column> 
-                    <p:commandButton   icon="pi pi-align-justify" actionListener="#{databaseBean.viewProduct(product)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin:20px;background-color: background;"/>
-                    <p:commandButton  icon="pi pi-plus" actionListener="#{userBean.addCart(product)}"  update= ":myForm " style="color: black;margin:20px;background-color: background"/>
-                </p:column>
+                <p:graphicImage value="/resources/images/main2.png" alt="Resim Yok" width="840px" style="margin-right: 10px" />
+                <p:graphicImage value="/resources/images/main3.png" alt="Resim Yok" width="840px" />
 
-            </p:dataTable> 
+            </div>
+
+
+
+            <div align="right" >
+                <p:splitButton  value="Sıralama Ölçütü" action=" " style=";margin: 10px">
+                    <p:menuitem value="Fiyat: Yüksek-Düşük" action="${databaseBean.sortProductsByPriceReverse()}" update="dtPersona"/>
+                    <p:menuitem value="Fiyat: Düşük-Yüksek" action="${databaseBean.sortProductsByPrice()}"  update="dtPersona"/>
+                </p:splitButton>
+            </div>
+
+            <p:dataGrid    id="dtPersona"  value="#{databaseBean.product}" var="product"   style="margin-bottom:45px;border-radius: 10px;"  >  
+                <div style="margin:30px" >  
+                    <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 347px;height: 430px;border-radius: 10px "/>
+
+                    <div class="product-info-left  ">
+                        <p:outputLabel  value="${product.name} "  style="font-weight: 500;font-size: 18px;color: black;"   />
+                    </div>
+                    <div class="product-info-left" >
+                        <p:outputLabel value="${product.description}" style="font-weight: 400;font-size: 17px;color: grey;" />  
+                    </div>
+                    <div class="product-info-left" >
+                        <p:outputLabel value=" #{userBean.returnRandomNumber()}  Renk" style="font-weight: 400;font-size: 17px;color: grey;" />  
+                    </div>
+                    <div class="product-info-left"  style="margin-top: 10px" >
+                        <p:rating value="#{product.rating}" readonly="true"/>
+                    </div>
+                    <div class="product-info-left" style="margin-top: 10px">
+                        <p:outputLabel value="$${product.price} "  style="font-weight: 500;font-size: 18px;color: black"/>
+                    </div>
+
+
+                    <div class="product-info-left ">
+
+                        <p:commandButton   icon="pi pi-align-justify" actionListener="#{databaseBean.viewProduct(product)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin-top:20px;margin-right: 15px;background-color: background; border-color: black"/>
+                        <p:commandButton  icon="pi pi-plus" actionListener="#{userBean.addCart(product)}"  update= ":myForm " style="color: black;margin:20px;background-color: background;border-color: black"/>
+                    </div>
+                </div>
+            </p:dataGrid >  
         </h:form>
+
+
         <h:form id="viewForm"> 
             <p:dialog id="dlgViewPersona" header="Ürün Detayları" widgetVar="viewDialog"  modal="true" width="540"  styleClass="custom-dialog" style="background-color: bisque;">
 
@@ -60,23 +110,23 @@
 
                 <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="Resim Yok" style="margin-left: 30px" width="380px" height="400"/>
 
-                <h:panelGrid columns="2" style="margin: 40px" >
+                <h:panelGrid columns="2" style="margin: 40px"  >
                     <h:outputLabel for="viewName" value="Ürün Adı:" styleClass="custom-text"/>
                     <h:outputText id="viewName" value="#{databaseBean.selectedProduct.name}"  styleClass="custom-dialog-text" />
 
                     <h:outputLabel for="viewPrice" value="Fiyat:" styleClass="custom-text"/>
-                    <h:outputText id="viewPrice" value="#{databaseBean.selectedProduct.price}£" styleClass="custom-dialog-text"/>
+                    <h:outputText id="viewPrice" value="$#{databaseBean.selectedProduct.price}" styleClass="custom-dialog-text"/>
 
                     <h:outputLabel for="viewQuantity" value="Detaylar:" styleClass="custom-text"/>
                     <h:outputText id="viewQuantity" value="#{databaseBean.selectedProduct.description}" styleClass="custom-dialog-text" />
 
                     <h:outputLabel for="viewRating" value="Puan:"  styleClass="custom-text" />
-                    <h:outputText  id="viewRating" styleClass="custom-dialog-text" value="#{databaseBean.selectedProduct.rating}*"/>
+                    <p:rating value="#{databaseBean.selectedProduct.rating}" readonly="true"/>
+
                 </h:panelGrid>
 
                 <p:column>
-                    <p:commandButton value="Sepete Ekle"  icon="pi pi-plus" iconPos="right" style="color:black;border-color: activecaption;margin-left: 130px;
-                                     background-color:antiquewhite ;" update=":myForm"  actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" styleClass="custom-button" />
+                    <p:commandButton value="Sepete Ekle"  icon="pi pi-plus" iconPos="right" style="margin-left: 130px;" update=":myForm"  actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" styleClass="custom-button" />
                 </p:column>
             </p:dialog>
         </h:form>

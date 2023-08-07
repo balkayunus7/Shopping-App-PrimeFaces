@@ -6,8 +6,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
@@ -59,7 +63,7 @@ public class DatabaseBean implements Serializable {
                         product.setId(resultSet.getInt("id"));
                         product.setName(resultSet.getString("name"));
                         product.setPrice(resultSet.getInt("price"));
-                        product.setRating(resultSet.getDouble("rating"));
+                        product.setRating(resultSet.getInt("rating"));
                         product.setQuantity(resultSet.getInt("quantity"));
                         product.setImagePath(resultSet.getString("imagePath"));
                         product.setDescription(resultSet.getString("description"));
@@ -70,6 +74,22 @@ public class DatabaseBean implements Serializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sortProductsByPrice() {
+        // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
+        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice);
+
+        // Ürünleri fiyatlarına göre sıralıyoruz
+        Collections.sort(products, byPrice);
+    }
+
+    public void sortProductsByPriceReverse() {
+        // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
+        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice).reversed();
+
+        // Ürünleri fiyatlarına göre sıralıyoruz
+        Collections.sort(products, byPrice);
     }
 
     // Getter method for the list of products
@@ -129,7 +149,7 @@ public class DatabaseBean implements Serializable {
                             System.out.println("Password: " + resultSet.getString("password"));
                             return true;
                         } else {
-                            System.out.println("Login failed!");
+                            System.out.println("login Failed");
                             return false;
                         }
                     } catch (Exception e) {
@@ -217,7 +237,7 @@ public class DatabaseBean implements Serializable {
                             product.setId(productResultSet.getInt("id"));
                             product.setName(productResultSet.getString("name"));
                             product.setPrice(productResultSet.getInt("price"));
-                            product.setRating(productResultSet.getDouble("rating"));
+                            product.setRating(productResultSet.getInt("rating"));
                             product.setImagePath(productResultSet.getString("imagePath"));
                             product.setDescription(productResultSet.getString("description"));
 
@@ -360,7 +380,6 @@ public class DatabaseBean implements Serializable {
         return orders;
     }
 
-    // ... (existing code)
     public List<ProductModel> getOrderItemsForOrder(int orderId, int newQuantity) throws ClassNotFoundException {
         List<ProductModel> orderItems = new ArrayList<>();
 
@@ -384,7 +403,7 @@ public class DatabaseBean implements Serializable {
                             orderItem.setId(orderItemsResultSet.getInt("id"));
                             orderItem.setName(orderItemsResultSet.getString("name"));
                             orderItem.setPrice(orderItemsResultSet.getInt("price"));
-                            orderItem.setRating(orderItemsResultSet.getDouble("rating"));
+                            orderItem.setRating(orderItemsResultSet.getInt("rating"));
                             orderItem.setImagePath(orderItemsResultSet.getString("imagePath"));
                             orderItem.setDescription(orderItemsResultSet.getString("description"));
                             orderItem.setQuantity(orderItemsResultSet.getInt("quantity"));

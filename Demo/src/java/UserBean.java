@@ -4,6 +4,7 @@ import com.example.ProductModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -131,7 +132,6 @@ public class UserBean implements Serializable {
     public void removeProduct(ProductModel product) {
         try {
             DatabaseBean databaseBean = new DatabaseBean();
-
             // Call the removeProductFromCart method of the DatabaseBean class to remove the product from the cart in the database
             databaseBean.removeProductFromCart(username, product.getId());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product removed from cart.", null));
@@ -197,12 +197,28 @@ public class UserBean implements Serializable {
             for (ProductModel cartProduct : cartProductsList) {
                 databaseBean.addOrderItem(orderId, cartProduct.getId(), cartProduct.getQuantity());
             }
+            clearCart();
 
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error creating order.", null));
         }
         return router.goBacktoPage();
 
+    }
+
+    private void clearCart() {
+        try {
+            DatabaseBean databaseBean = new DatabaseBean();
+            List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
+
+            for (ProductModel cartProduct : cartProductsList) {
+                // Her bir ürünü sepetten çıkarın
+                databaseBean.removeProductFromCart(username, cartProduct.getId());
+            }
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sepet temizlenirken hata oluştu.", null));
+        }
     }
 
     public List<OrderModel> getUserOrders() {
@@ -240,6 +256,11 @@ public class UserBean implements Serializable {
 
         // Show the dialog with the order items
         PrimeFaces.current().executeScript("PF('orderItemsDialog').show();");
+    }
+
+    public int returnRandomNumber() {
+        Random random = new Random();
+        return random.nextInt(5) + 1;
     }
 
 }
