@@ -5,8 +5,8 @@ Project has a log in and sign in page connected to postgreSQL server
 
 Register or login screen where you can register with e-mail and username
 
-![Ekran Görüntüsü (2)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/95c99fd8-5466-48d6-9913-5d49ef25c0b6)
-![Ekran Görüntüsü (3)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/ed07e017-97a8-4f5f-9940-4dcb4cefb3ac)
+![Ekran Görüntüsü (23)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/8ec86951-43bd-4c93-839c-cecb03aaabe7)
+![Ekran Görüntüsü (25)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/57c4b96d-b131-4ac6-bfb7-ff8ac2587614)
 
 User can use main page to:
 
