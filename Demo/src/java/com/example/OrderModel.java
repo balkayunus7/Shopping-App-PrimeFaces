@@ -8,6 +8,15 @@ public class OrderModel {
     private String username;
     private Timestamp createdAt;
     private double total_price;
+    private int number;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public double getTotal_price() {
         return total_price;
@@ -16,7 +25,6 @@ public class OrderModel {
     public void setTotal_price(double total_price) {
         this.total_price = total_price;
     }
-  
 
     public int getId() {
         return id;

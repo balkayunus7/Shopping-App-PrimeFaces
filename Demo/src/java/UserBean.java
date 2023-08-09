@@ -192,7 +192,7 @@ public class UserBean implements Serializable {
         try {
             DatabaseBean databaseBean = new DatabaseBean();
             List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
-            int orderId = databaseBean.createOrder(username, getTotalPrice());
+            int orderId = databaseBean.createOrder(username, getTotalPrice(),returnRandomOrderNumber());
 
             for (ProductModel cartProduct : cartProductsList) {
                 databaseBean.addOrderItem(orderId, cartProduct.getId(), cartProduct.getQuantity());
@@ -262,5 +262,11 @@ public class UserBean implements Serializable {
         Random random = new Random();
         return random.nextInt(5) + 1;
     }
+    
+     public int returnRandomOrderNumber() {
+        Random random = new Random();
+        return random.nextInt(10000000) + 1;
+    }
+
 
 }

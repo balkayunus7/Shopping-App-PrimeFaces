@@ -18,44 +18,42 @@
             <p:commandButton  icon="pi pi-arrow-left" action="#{routingBean.goBacktoPage()}"  style="color: black;background-color: #fff;border: #fff"    />
 
 
-            <p:dataScroller id="dataScroller7" value="#{userBean.userOrders}" var="order" mode="inline" chunkSize="30" style="margin: 20px;">
-                <p:card  style="margin: 20px;background-color: #f4f8dd">
-                    <div class="product">
-                        <div class="product-list-item p-5">
+            <p:dataGrid id="dataScroller7" value="#{userBean.userOrders}"   var="order"  style="margin: 30px;">
+                <p:card  style="margin-right: 30px;margin-bottom:  30px;margin-top: 30px;margin-left:150px;background-color: whitesmoke">
 
-                            <div class="product-list-detail">
-                                <div class="product-info-left  custom-cart-text " >
-                                    <h:outputText value="PRODUCT  ORDER"/>
-                                </div>
-                                <div class="product-info-left  custom-cart-text-desc">
-                                    <h:outputText  value="Order Details"  style="color: red"/>
-                                </div>
-                                <div class="product-info-left">
-                                    <div class="product-list-item p-5">
-                                        <h:outputText style="margin-left:20px;font-size:30px;color: black;font-weight: 700"  value="Order Price:  #{order.total_price}"/>
-                                        <i class="pi pi-dollar" style="margin-right:10px;margin-top:6px;font-size: 2rem;color:green"></i>
-                                    </div>
+                    <div class="product-list-item  custom-cart-text " >
+                        <h:outputText value="Order Number "/>
+                        <h:outputText value=" ##{order.number}"  style="margin-left: 15px;  color: #ff3333"/>
 
-                                </div>
-                                <div class="product-list-item p-5  custom-empty-desc" style="margin-top:20px;margin-bottom: 15px;margin-left: 25px">
-                                    <i class="pi pi-user" style="margin-right:10px;color: blue"></i>
-                                    <h:outputText  value="Username : #{order.username}"/>
-                                </div>
-                                <div class="product-info-left  custom-cart-text-desc">
-                                    <h:outputText  value="Date Added:" style="margin-bottom:7px"/>
-                                    <p:inputText readonly="true" size="15"  id="float-input" value="#{order.createdAt}" />
-                                </div>
-                            </div>
-                            <div style="margin-top: 100px">
-                                <i class="pi pi-check-circle" style="font-weight:800; margin-right:10px;color: green"></i>
-                                <h:outputText  value="Sipariş tamamlandı" style="font-weight: 800;margin-bottom:7px"/>
-                            </div>
-                            <h:commandButton   value="View Order Details"   style="font-size:17px;font-weight: bold;margin-top:20px;margin-left:700px;color:black;padding: 17px;border-radius: 10px;"  action="#{userBean.viewOrderItems(order.id)}"   />   
+                    </div>
+           
+                    <div class="product-info-left  custom-cart-text-desc">
+                        <h:outputText  value="Order Details"  style="color: red"/>
+                    </div>
 
-                        </div>
-                    </div> 
+                    <div class="product-info-left  custom-empty-desc" style="margin-top:20px;margin-bottom: 30px;margin-left: 25px">
+                        <p:chip >
+                            <i class="pi pi-user" style="margin-right: 5px;color: black"></i>
+                            <h:outputText  value="Username : #{order.username}"/>
+                        </p:chip>
+                    </div>
+                    <div style="margin-top: 20px;margin-bottom: 20px;margin-left: 25px">
+                        <i class="pi pi-check-circle" style="font-weight:800; margin-right:10px;color: green"></i>
+                        <h:outputText  value="Sipariş tamamlandı" style="font-weight: 800;margin-bottom:7px"/>
+                    </div>
+                    <div class="product-list-item custom-cart-text-desc">
+                        <p:inputText readonly="true" size="15" style="margin-left: 20px"  id="float-input" value="#{order.createdAt}" />
+                    </div>
+                    <div class="product-list-item">
+                        <h:outputText style="margin-left:20px;font-size:30px;color: black;font-weight:500"  value="#{order.total_price}"/>
+                        <i class="pi pi-dollar" style="margin-right:20px;margin-top:6px;font-size: 2rem;color:green"></i>
+                        <h:commandButton  value="View"   style="font-size:17px;font-weight: bold;background-color: white;padding: 7px;margin-left: 10px;color:black;border-radius: 5px;"  action="#{userBean.viewOrderItems(order.id)}"   />   
+
+                    </div>
+
+
                 </p:card>
-            </p:dataScroller>
+            </p:dataGrid>
 
 
             <p:dialog id="orderItemsDialog" header="Order Products" widgetVar="orderItemsDialog" height="700"   modal="true" >

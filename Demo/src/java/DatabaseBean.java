@@ -9,20 +9,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
 @ManagedBean
 @ApplicationScoped
 public class DatabaseBean implements Serializable {
-
+    
     String url = "jdbc:postgresql://localhost:5432/shopme";
     String dbUsername = "postgres";
     String dbPassword = "yunus744";
-
+    
     private List<ProductModel> products;
     // Added selected item to show in dialog panel. It will be used in the View metot.
     private ProductModel selectedProduct;
@@ -31,7 +29,7 @@ public class DatabaseBean implements Serializable {
     public ProductModel getSelectedProduct() {
         return selectedProduct;
     }
-
+    
     public void setSelectedProduct(ProductModel selectedProduct) {
         this.selectedProduct = selectedProduct;
     }
@@ -75,7 +73,7 @@ public class DatabaseBean implements Serializable {
             e.printStackTrace();
         }
     }
-
+    
     public void sortProductsByPrice() {
         // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
         Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice);
@@ -83,7 +81,7 @@ public class DatabaseBean implements Serializable {
         // Ürünleri fiyatlarına göre sıralıyoruz
         Collections.sort(products, byPrice);
     }
-
+    
     public void sortProductsByPriceReverse() {
         // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
         Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice).reversed();
@@ -123,7 +121,7 @@ public class DatabaseBean implements Serializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        
         return false;
     }
 
@@ -160,10 +158,10 @@ public class DatabaseBean implements Serializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        
         return false;
     }
-
+    
     public void addProductToCart(String username, int product_Id) {
         try {
             // Load the PostgreSQL JDBC driver
@@ -188,7 +186,7 @@ public class DatabaseBean implements Serializable {
             e.printStackTrace();
         }
     }
-
+    
     public void removeProductFromCart(String username, int product_Id) {
         try {
             // Load the PostgreSQL JDBC driver
@@ -213,22 +211,22 @@ public class DatabaseBean implements Serializable {
             e.printStackTrace();
         }
     }
-
+    
     public List<ProductModel> getProductInList(String username) throws ClassNotFoundException {
         List<ProductModel> cartProducts = new ArrayList<>();
-
+        
         try {
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
-
+            
             try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 // SQL query to retrieve products for a specific user from the products table
                 String productQuery = "SELECT p.* FROM products p INNER JOIN user_products up ON p.id = up.product_id WHERE up.username = ?";
-
+                
                 try (PreparedStatement productStatement = connection.prepareStatement(productQuery)) {
                     // Set the username parameter in the SQL query
                     productStatement.setString(1, username);
-
+                    
                     try (ResultSet productResultSet = productStatement.executeQuery()) {
                         // Loop through the query results and create ProductModel objects
                         // to represent each product in the user's cart
@@ -256,7 +254,7 @@ public class DatabaseBean implements Serializable {
                                     }
                                 }
                             }
-
+                            
                             cartProducts.add(product);
                         }
                     }
@@ -270,7 +268,7 @@ public class DatabaseBean implements Serializable {
         // Return the list of products in the user's cart
         return cartProducts;
     }
-
+    
     public void updateProductQuantity(String username, int productId, int newQuantity) {
         try {
             // Load the PostgreSQL JDBC driver
@@ -286,7 +284,7 @@ public class DatabaseBean implements Serializable {
                     statement.setInt(1, newQuantity);
                     statement.setString(2, username);
                     statement.setInt(3, productId);
-
+                    
                     statement.executeUpdate();
                 }
             }
@@ -295,21 +293,22 @@ public class DatabaseBean implements Serializable {
             e.printStackTrace();
         }
     }
-
-    public int createOrder(String username, double total_price) throws ClassNotFoundException, SQLException {
+    
+    public int createOrder(String username, double total_price, int number) throws ClassNotFoundException, SQLException {
         int orderId = -1;
 
         // Load the PostgreSQL JDBC driver and establish a connection to the database
         Class.forName("org.postgresql.Driver");
         try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
             // Define the SQL query to insert a new order for the user, including the created_at column
-            String orderQuery = "INSERT INTO orders (username,created_at,total_price) VALUES (?,CURRENT_TIMESTAMP,?) RETURNING id";
+            String orderQuery = "INSERT INTO orders (username,created_at,total_price,number) VALUES (?,CURRENT_TIMESTAMP,?,?) RETURNING id";
 
             // Create a prepared statement for executing the query
             try (PreparedStatement orderStatement = connection.prepareStatement(orderQuery)) {
                 // Set the username parameter in the SQL query
                 orderStatement.setString(1, username);
                 orderStatement.setDouble(2, total_price);
+                orderStatement.setDouble(3, number);
 
                 // Execute the update to add the order and retrieve the generated order ID
                 try (ResultSet orderResultSet = orderStatement.executeQuery()) {
@@ -319,10 +318,10 @@ public class DatabaseBean implements Serializable {
                 }
             }
         }
-
+        
         return orderId;
     }
-
+    
     public void addOrderItem(int orderId, int productId, int quantity) throws ClassNotFoundException, SQLException {
         // Load the PostgreSQL JDBC driver and establish a connection to the database
         Class.forName("org.postgresql.Driver");
@@ -342,10 +341,10 @@ public class DatabaseBean implements Serializable {
             }
         }
     }
-
+    
     public List<OrderModel> getOrdersByUsername(String username) {
         List<OrderModel> orders = new ArrayList<>();
-
+        
         try {
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
@@ -367,8 +366,9 @@ public class DatabaseBean implements Serializable {
                             order.setUsername(resultSet.getString("username"));
                             order.setCreatedAt(resultSet.getTimestamp("created_at"));
                             order.setTotal_price(resultSet.getDouble("total_price"));
+                            order.setNumber(resultSet.getInt("number"));
                             orders.add(order);
-
+                            
                         }
                     }
                 }
@@ -376,25 +376,25 @@ public class DatabaseBean implements Serializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        
         return orders;
     }
-
+    
     public List<ProductModel> getOrderItemsForOrder(int orderId, int newQuantity) throws ClassNotFoundException {
         List<ProductModel> orderItems = new ArrayList<>();
-
+        
         try {
             // Load the PostgreSQL JDBC driver
             Class.forName("org.postgresql.Driver");
-
+            
             try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
                 // SQL query to retrieve order items for a specific order from the order_items table
                 String orderItemsQuery = "SELECT oi.*, p.* FROM order_items oi INNER JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?";
-
+                
                 try (PreparedStatement orderItemsStatement = connection.prepareStatement(orderItemsQuery)) {
                     // Set the orderId parameter in the SQL query
                     orderItemsStatement.setInt(1, orderId);
-
+                    
                     try (ResultSet orderItemsResultSet = orderItemsStatement.executeQuery()) {
                         // Loop through the query results and create ProductModel objects
                         // to represent each order item
@@ -417,8 +417,8 @@ public class DatabaseBean implements Serializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        
         return orderItems;
     }
-
+    
 }

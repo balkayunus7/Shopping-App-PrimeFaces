@@ -5,7 +5,7 @@
             <url>web/order_page.xhtml</url>
             <bookmark id="1">
                 <name/>
-                <line>43</line>
+                <line>48</line>
                 <key/>
             </bookmark>
         </file>
@@ -14,9 +14,8 @@
         <group>
             <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/src/java/DatabaseBean.java</file>
             <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/src/java/UserBean.java</file>
-            <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/web/index.xhtml</file>
+            <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/src/java/com/example/ProductModel.java</file>
             <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/web/login_page.xhtml</file>
-            <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/web/resources/css/product-list.css</file>
             <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/web/order_page.xhtml</file>
             <file>file:/C:/Users/Yunus/Documents/github/Shopping-Web-PrimeFaces/Demo/web/cart_page.xhtml</file>
         </group>

@@ -26,9 +26,11 @@
                 <p:commandButton    icon="pi pi-user-minus"   iconPos="right" styleClass="custom-icon-size" style="background-color:white;
                                     color:black;
                                     border: #fff;" update=":myForm" action="#{userBean.logout()}"   />
-                <p:commandButton  icon="pi pi-shopping-cart"  iconPos="right" styleClass="custom-icon-size" style="margin-left: 1380px;  background-color:white;
-                                  color:black;
-                                  border: #fff;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
+                <p:badge style="margin-top: 5px" value="${userBean.cartProductsList.size()}">
+                    <p:commandButton  icon="pi pi-shopping-cart"  iconPos="right" styleClass="custom-icon-size" style="margin-left: 1380px;  background-color:white;
+                                      color:black;
+                                      border: #fff;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
+                </p:badge>
                 <p:commandButton    icon="pi pi-tags"  iconPos="right"  styleClass="custom-icon-size" style="margin-left: 10px;margin-bottom: 60px;  background-color:white;
                                     color:black;
                                     border: #fff;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
