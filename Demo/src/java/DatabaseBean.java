@@ -15,12 +15,8 @@ import javax.inject.Named;
 @Named
 @ManagedBean
 @ApplicationScoped
-public class DatabaseBean implements Serializable {
-    
-    String url = "jdbc:postgresql://localhost:5432/shopme";
-    String dbUsername = "postgres";
-    String dbPassword = "yunus744";
-    
+public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseConnection {
+
     private List<ProductModel> products;
     // Added selected item to show in dialog panel. It will be used in the View metot.
     private ProductModel selectedProduct;
@@ -29,9 +25,19 @@ public class DatabaseBean implements Serializable {
     public ProductModel getSelectedProduct() {
         return selectedProduct;
     }
-    
+
     public void setSelectedProduct(ProductModel selectedProduct) {
         this.selectedProduct = selectedProduct;
+    }
+    // Getter method for the list of products
+
+    public List<ProductModel> getProduct() {
+        return products;
+    }
+
+    // Setter method for the list of products
+    public void setProduct(List<ProductModel> products) {
+        this.products = products;
     }
 
     // Wrote code to detect the clicked value for dialog
@@ -41,16 +47,17 @@ public class DatabaseBean implements Serializable {
 
     // This method is automatically executed after the bean is constructed and initialized.
     @PostConstruct
+    @Override
     public void init() {
         products = new ArrayList<>();
         try {
 
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // set up the database connection
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "SELECT * FROM products";
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String query = DatabaseConnection.sqlInitProducts;
 
                 // Execute the query to fetch product data from the database
                 try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
@@ -69,11 +76,11 @@ public class DatabaseBean implements Serializable {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
     }
-    
+
+    @Override
     public void sortProductsByPrice() {
         // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
         Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice);
@@ -81,7 +88,8 @@ public class DatabaseBean implements Serializable {
         // Ürünleri fiyatlarına göre sıralıyoruz
         Collections.sort(products, byPrice);
     }
-    
+
+    @Override
     public void sortProductsByPriceReverse() {
         // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
         Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice).reversed();
@@ -90,25 +98,16 @@ public class DatabaseBean implements Serializable {
         Collections.sort(products, byPrice);
     }
 
-    // Getter method for the list of products
-    public List<ProductModel> getProduct() {
-        return products;
-    }
-
-    // Setter method for the list of products
-    public void setProduct(List<ProductModel> products) {
-        this.products = products;
-    }
-
     // Method to register a new user in the database
+    @Override
     public boolean registerUser(String username, String password, String email) {
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish the database connection
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String query = DatabaseConnection.sqlRegister;
 
                 // Execute the query to insert user data into the 'users' table
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -118,22 +117,22 @@ public class DatabaseBean implements Serializable {
                     statement.executeUpdate();
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
-        
+
         return false;
     }
 
     // Method to check if a user can log in
+    @Override
     public boolean loginUser(String username, String password) {
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish the database connection
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "SELECT username, password FROM users WHERE username = ? AND password = ?";
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String query = DatabaseConnection.sqlLogin;
 
                 // Execute the query to check if the provided username and password match a user in the 'users' table
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -147,7 +146,7 @@ public class DatabaseBean implements Serializable {
                             System.out.println("Password: " + resultSet.getString("password"));
                             return true;
                         } else {
-                            System.out.println("login Failed");
+                            System.out.println("Login Failed");
                             return false;
                         }
                     } catch (Exception e) {
@@ -155,22 +154,22 @@ public class DatabaseBean implements Serializable {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
-        
+
         return false;
     }
-    
+
+    @Override
     public void addProductToCart(String username, int product_Id) {
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish a connection to the database using the provided credentials
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to insert a new entry into the 'user_products' table
-                String query = "INSERT INTO user_products (username, product_id) VALUES (?, ?) ";
+                String query = DatabaseConnection.sqlAddProductDatabase;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -182,20 +181,20 @@ public class DatabaseBean implements Serializable {
                     statement.executeUpdate();
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
     }
-    
+
+    @Override
     public void removeProductFromCart(String username, int product_Id) {
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish a connection to the database using the provided credentials
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to delete the entry from the 'user_products' table
-                String query = "DELETE FROM user_products WHERE username = ? AND product_id = ?";
+                String query = DatabaseConnection.sqlRemoveProductDatabase;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -207,26 +206,26 @@ public class DatabaseBean implements Serializable {
                     statement.executeUpdate();
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
     }
-    
+
+    @Override
     public List<ProductModel> getProductInList(String username) throws ClassNotFoundException {
         List<ProductModel> cartProducts = new ArrayList<>();
-        
+
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
-            
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            DatabaseConnection.loadPostgreSQLDriver();
+
+            try (Connection connection = DatabaseConnection.getConnection()) {
                 // SQL query to retrieve products for a specific user from the products table
-                String productQuery = "SELECT p.* FROM products p INNER JOIN user_products up ON p.id = up.product_id WHERE up.username = ?";
-                
+                String productQuery = DatabaseConnection.sqlGetProductInList;
+
                 try (PreparedStatement productStatement = connection.prepareStatement(productQuery)) {
                     // Set the username parameter in the SQL query
                     productStatement.setString(1, username);
-                    
+
                     try (ResultSet productResultSet = productStatement.executeQuery()) {
                         // Loop through the query results and create ProductModel objects
                         // to represent each product in the user's cart
@@ -240,7 +239,7 @@ public class DatabaseBean implements Serializable {
                             product.setDescription(productResultSet.getString("description"));
 
                             // Now, get the quantity value from a different table with a separate query
-                            String quantityQuery = "SELECT quantity FROM user_products WHERE username = ? AND product_id = ?";
+                            String quantityQuery = DatabaseConnection.sqlSelectQuantity;
                             try (PreparedStatement quantityStatement = connection.prepareStatement(quantityQuery)) {
                                 quantityStatement.setString(1, username);
                                 quantityStatement.setInt(2, product.getId());
@@ -254,54 +253,55 @@ public class DatabaseBean implements Serializable {
                                     }
                                 }
                             }
-                            
+
                             cartProducts.add(product);
                         }
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             // Handle exceptions related to loading the database driver or executing queries
-            e.printStackTrace();
         }
 
         // Return the list of products in the user's cart
         return cartProducts;
     }
-    
+
+    @Override
     public void updateProductQuantity(String username, int productId, int newQuantity) {
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish a connection to the database using the provided credentials
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to update the quantity of a product in the 'user_products' table
-                String query = "UPDATE user_products SET quantity = ? WHERE username = ? AND product_id = ?";
+                String query = DatabaseConnection.sqlUpdateQuantity;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
                     statement.setInt(1, newQuantity);
                     statement.setString(2, username);
                     statement.setInt(3, productId);
-                    
+
                     statement.executeUpdate();
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             // Handle any exceptions that may occur during database operations
-            e.printStackTrace();
         }
     }
-    
+
+    @Override
     public int createOrder(String username, double total_price, int number) throws ClassNotFoundException, SQLException {
         int orderId = -1;
 
         // Load the PostgreSQL JDBC driver and establish a connection to the database
-        Class.forName("org.postgresql.Driver");
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+        DatabaseConnection.loadPostgreSQLDriver();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
             // Define the SQL query to insert a new order for the user, including the created_at column
-            String orderQuery = "INSERT INTO orders (username,created_at,total_price,number) VALUES (?,CURRENT_TIMESTAMP,?,?) RETURNING id";
+            String orderQuery = DatabaseConnection.sqlCreateOrder;
 
             // Create a prepared statement for executing the query
             try (PreparedStatement orderStatement = connection.prepareStatement(orderQuery)) {
@@ -318,16 +318,18 @@ public class DatabaseBean implements Serializable {
                 }
             }
         }
-        
+
         return orderId;
     }
-    
+
+    @Override
     public void addOrderItem(int orderId, int productId, int quantity) throws ClassNotFoundException, SQLException {
         // Load the PostgreSQL JDBC driver and establish a connection to the database
-        Class.forName("org.postgresql.Driver");
-        try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+        DatabaseConnection.loadPostgreSQLDriver();
+
+        try (Connection connection = DatabaseConnection.getConnection()) {
             // Define the SQL query to insert a new order item for the order
-            String orderItemQuery = "INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)";
+            String orderItemQuery = sqlAddOrderItem;
 
             // Create a prepared statement for executing the query
             try (PreparedStatement orderItemStatement = connection.prepareStatement(orderItemQuery)) {
@@ -341,17 +343,18 @@ public class DatabaseBean implements Serializable {
             }
         }
     }
-    
+
+    @Override
     public List<OrderModel> getOrdersByUsername(String username) {
         List<OrderModel> orders = new ArrayList<>();
-        
+
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
+            DatabaseConnection.loadPostgreSQLDriver();
 
             // Establish a connection to the database using the provided credentials
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
-                String query = "SELECT * FROM orders WHERE username = ? ORDER BY created_at DESC";
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String query = DatabaseConnection.sqlGetOrders;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -368,33 +371,33 @@ public class DatabaseBean implements Serializable {
                             order.setTotal_price(resultSet.getDouble("total_price"));
                             order.setNumber(resultSet.getInt("number"));
                             orders.add(order);
-                            
+
                         }
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
-        
+
         return orders;
     }
-    
+
+    @Override
     public List<ProductModel> getOrderItemsForOrder(int orderId, int newQuantity) throws ClassNotFoundException {
         List<ProductModel> orderItems = new ArrayList<>();
-        
+
         try {
             // Load the PostgreSQL JDBC driver
-            Class.forName("org.postgresql.Driver");
-            
-            try (Connection connection = DriverManager.getConnection(url, dbUsername, dbPassword)) {
+            DatabaseConnection.loadPostgreSQLDriver();
+
+            try (Connection connection = DatabaseConnection.getConnection()) {
                 // SQL query to retrieve order items for a specific order from the order_items table
-                String orderItemsQuery = "SELECT oi.*, p.* FROM order_items oi INNER JOIN products p ON oi.product_id = p.id WHERE oi.order_id = ?";
-                
+                String orderItemsQuery = DatabaseConnection.sqlGetOrderItems;
+
                 try (PreparedStatement orderItemsStatement = connection.prepareStatement(orderItemsQuery)) {
                     // Set the orderId parameter in the SQL query
                     orderItemsStatement.setInt(1, orderId);
-                    
+
                     try (ResultSet orderItemsResultSet = orderItemsStatement.executeQuery()) {
                         // Loop through the query results and create ProductModel objects
                         // to represent each order item
@@ -414,11 +417,10 @@ public class DatabaseBean implements Serializable {
                     }
                 }
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
         }
-        
+
         return orderItems;
     }
-    
+
 }

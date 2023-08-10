@@ -16,8 +16,6 @@
     <h:body>
         <h:form id="myForm2"> 
             <p:commandButton  icon="pi pi-arrow-left" action="#{routingBean.goBacktoPage()}"  style="color: black;background-color: #fff;border: #fff"    />
-
-
             <p:dataGrid id="dataScroller7" value="#{userBean.userOrders}"   var="order"  style="margin: 30px;">
                 <p:card  style="margin-right: 30px;margin-bottom:  30px;margin-top: 30px;margin-left:150px;background-color: whitesmoke">
 
@@ -26,7 +24,7 @@
                         <h:outputText value=" ##{order.number}"  style="margin-left: 15px;  color: #ff3333"/>
 
                     </div>
-           
+
                     <div class="product-info-left  custom-cart-text-desc">
                         <h:outputText  value="Order Details"  style="color: red"/>
                     </div>

@@ -22,6 +22,31 @@ public class UserBean implements Serializable {
     private int newQuantity;
     RoutingBean router = new RoutingBean();
 
+    // Getter and Setter methods for the properties
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     // Method to register the user
     public String register() {
         // Save the user in the database
@@ -162,37 +187,12 @@ public class UserBean implements Serializable {
         }
     }
 
-    // Getter and Setter methods for the properties
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String createOrderUser() {
 
         try {
             DatabaseBean databaseBean = new DatabaseBean();
             List<ProductModel> cartProductsList = databaseBean.getProductInList(username);
-            int orderId = databaseBean.createOrder(username, getTotalPrice(),returnRandomOrderNumber());
+            int orderId = databaseBean.createOrder(username, getTotalPrice(), returnRandomOrderNumber());
 
             for (ProductModel cartProduct : cartProductsList) {
                 databaseBean.addOrderItem(orderId, cartProduct.getId(), cartProduct.getQuantity());
@@ -251,9 +251,7 @@ public class UserBean implements Serializable {
     // Method to view the order items for a specific order ID
     public void viewOrderItems(int orderId) {
         // Retrieve the order items for the given order ID using getOrderItemsForOrderId method
-
         selectedOrderItems = getOrderItemsForOrderId(orderId);
-
         // Show the dialog with the order items
         PrimeFaces.current().executeScript("PF('orderItemsDialog').show();");
     }
@@ -262,11 +260,10 @@ public class UserBean implements Serializable {
         Random random = new Random();
         return random.nextInt(5) + 1;
     }
-    
-     public int returnRandomOrderNumber() {
+
+    public int returnRandomOrderNumber() {
         Random random = new Random();
         return random.nextInt(10000000) + 1;
     }
-
 
 }
