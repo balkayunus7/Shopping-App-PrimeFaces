@@ -16,7 +16,7 @@ User can use main page to:
 
 3-Increase or decrease the number of products
 
-![Ekran Görüntüsü (26)](https://github.com/balkayunus7/Shopping-App-PrimeFaces-PostgreSQL/assets/98759759/fdfb295d-25b8-4131-ab60-e4ce7eea79d7)
+![Ekran Görüntüsü (31)](https://github.com/balkayunus7/Shopping-App-PrimeFaces-PostgreSQL/assets/98759759/9e08d25a-e107-4674-82a5-91438cb1bbd4)
 ![Ekran Görüntüsü (17)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/1552b443-e0fe-4716-bdeb-405f0eeb95ba)
 ![Ekran Görüntüsü (18)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/149e48be-66a3-46b9-84cf-e2e7bf1a529f)
 ![Ekran Görüntüsü (20)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/dd38eaeb-26d8-462a-a4fc-964a41469dcc)
