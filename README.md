@@ -15,7 +15,8 @@ User can use main page to:
 2-View the details of the product
 
 3-Increase or decrease the number of products
-![Ekran Görüntüsü (16)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/e688d1a7-7754-4c97-acb4-535d7c9ba506)
+
+![Ekran Görüntüsü (26)](https://github.com/balkayunus7/Shopping-App-PrimeFaces-PostgreSQL/assets/98759759/fdfb295d-25b8-4131-ab60-e4ce7eea79d7)
 ![Ekran Görüntüsü (17)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/1552b443-e0fe-4716-bdeb-405f0eeb95ba)
 ![Ekran Görüntüsü (18)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/149e48be-66a3-46b9-84cf-e2e7bf1a529f)
 ![Ekran Görüntüsü (20)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/dd38eaeb-26d8-462a-a4fc-964a41469dcc)
@@ -39,7 +40,7 @@ Payment screen where you can enter card number, name on card, expiry date, cvc i
 
 The order page keeps the orders paid before on the payment screen
 
-![Ekran Görüntüsü (15)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/4fda5f97-2fed-4000-a253-dc9ad4a75721)
+![Ekran Görüntüsü (28)](https://github.com/balkayunus7/Shopping-App-PrimeFaces-PostgreSQL/assets/98759759/4ebd1567-d4c7-4202-a9da-8fb791978964)
 ![Ekran Görüntüsü (14)](https://github.com/balkayunus7/Shopping-App-PrimeFaces/assets/98759759/8752119c-3a4e-4ba7-bf15-a81d3ed9b451)
 
 
