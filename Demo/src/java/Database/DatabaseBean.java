@@ -1,6 +1,7 @@
+package Database;
 
-import com.example.OrderModel;
-import com.example.ProductModel;
+import Models.OrderModel;
+import Models.ProductModel;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -9,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
@@ -17,11 +20,10 @@ import javax.inject.Named;
 @ApplicationScoped
 public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseConnection {
 
-    private List<ProductModel> products;
-    // Added selected item to show in dialog panel. It will be used in the View metot.
+    private List<ProductModel> products = new ArrayList<>();
     private ProductModel selectedProduct;
 
-    // Getter and Setter methods for selectedPersona
+    // for View method 
     public ProductModel getSelectedProduct() {
         return selectedProduct;
     }
@@ -29,20 +31,28 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
     public void setSelectedProduct(ProductModel selectedProduct) {
         this.selectedProduct = selectedProduct;
     }
-    // Getter method for the list of products
 
-    public List<ProductModel> getProduct() {
+    public void viewProduct(ProductModel product) {
+        selectedProduct = product;
+        
+        // Use FacesContext to navigate to the product detail page
+        FacesContext context = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = context.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(context, null, "productDetails");
+
+    }
+
+    // for products at init time 
+    public List<ProductModel> getProducts() {
         return products;
     }
 
-    // Setter method for the list of products
-    public void setProduct(List<ProductModel> products) {
+    public void setProducts(List<ProductModel> products) {
         this.products = products;
     }
 
-    // Wrote code to detect the clicked value for dialog
-    public void viewProduct(ProductModel product) {
-        selectedProduct = product;
+    public void addProduct(ProductModel product) {
+        products.add(product);
     }
 
     // This method is automatically executed after the bean is constructed and initialized.
@@ -57,7 +67,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             // set up the database connection
             try (Connection connection = DatabaseConnection.getConnection()) {
-                String query = DatabaseConnection.sqlInitProducts;
+                String query = DatabaseConnection.SQLINITPRODUCTS;
 
                 // Execute the query to fetch product data from the database
                 try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
@@ -80,24 +90,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
         }
     }
 
-    @Override
-    public void sortProductsByPrice() {
-        // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
-        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice);
-
-        // Ürünleri fiyatlarına göre sıralıyoruz
-        Collections.sort(products, byPrice);
-    }
-
-    @Override
-    public void sortProductsByPriceReverse() {
-        // Fiyata göre sıralamak için Comparator nesnesi oluşturuyoruz
-        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice).reversed();
-
-        // Ürünleri fiyatlarına göre sıralıyoruz
-        Collections.sort(products, byPrice);
-    }
-
+    // USER METOTS
     // Method to register a new user in the database
     @Override
     public boolean registerUser(String username, String password, String email) {
@@ -107,7 +100,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             // Establish the database connection
             try (Connection connection = DatabaseConnection.getConnection()) {
-                String query = DatabaseConnection.sqlRegister;
+                String query = DatabaseConnection.SQLREGISTER;
 
                 // Execute the query to insert user data into the 'users' table
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -132,7 +125,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             // Establish the database connection
             try (Connection connection = DatabaseConnection.getConnection()) {
-                String query = DatabaseConnection.sqlLogin;
+                String query = DatabaseConnection.SQLLOGIN;
 
                 // Execute the query to check if the provided username and password match a user in the 'users' table
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -160,6 +153,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
         return false;
     }
 
+    // PRODUCT METOTS
     @Override
     public void addProductToCart(String username, int product_Id) {
         try {
@@ -169,7 +163,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
             // Establish a connection to the database using the provided credentials
             try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to insert a new entry into the 'user_products' table
-                String query = DatabaseConnection.sqlAddProductDatabase;
+                String query = DatabaseConnection.SQLADDPRODUCTDATABASE;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -194,7 +188,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
             // Establish a connection to the database using the provided credentials
             try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to delete the entry from the 'user_products' table
-                String query = DatabaseConnection.sqlRemoveProductDatabase;
+                String query = DatabaseConnection.SQLREMOVEPRODUCTDATABASE;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -220,7 +214,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             try (Connection connection = DatabaseConnection.getConnection()) {
                 // SQL query to retrieve products for a specific user from the products table
-                String productQuery = DatabaseConnection.sqlGetProductInList;
+                String productQuery = DatabaseConnection.SQLGETPRODUCTINLIST;
 
                 try (PreparedStatement productStatement = connection.prepareStatement(productQuery)) {
                     // Set the username parameter in the SQL query
@@ -239,7 +233,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
                             product.setDescription(productResultSet.getString("description"));
 
                             // Now, get the quantity value from a different table with a separate query
-                            String quantityQuery = DatabaseConnection.sqlSelectQuantity;
+                            String quantityQuery = DatabaseConnection.SQLSELECTQUANTITY;
                             try (PreparedStatement quantityStatement = connection.prepareStatement(quantityQuery)) {
                                 quantityStatement.setString(1, username);
                                 quantityStatement.setInt(2, product.getId());
@@ -276,7 +270,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
             // Establish a connection to the database using the provided credentials
             try (Connection connection = DatabaseConnection.getConnection()) {
                 // Define the SQL query to update the quantity of a product in the 'user_products' table
-                String query = DatabaseConnection.sqlUpdateQuantity;
+                String query = DatabaseConnection.SQLUPDATEQUANTITY;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -292,6 +286,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
         }
     }
 
+    // ORDER METOTS
     @Override
     public int createOrder(String username, double total_price, int number) throws ClassNotFoundException, SQLException {
         int orderId = -1;
@@ -301,7 +296,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             // Define the SQL query to insert a new order for the user, including the created_at column
-            String orderQuery = DatabaseConnection.sqlCreateOrder;
+            String orderQuery = DatabaseConnection.SQLCREATEORDER;
 
             // Create a prepared statement for executing the query
             try (PreparedStatement orderStatement = connection.prepareStatement(orderQuery)) {
@@ -329,7 +324,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
         try (Connection connection = DatabaseConnection.getConnection()) {
             // Define the SQL query to insert a new order item for the order
-            String orderItemQuery = sqlAddOrderItem;
+            String orderItemQuery = SQLADDORDERITEM;
 
             // Create a prepared statement for executing the query
             try (PreparedStatement orderItemStatement = connection.prepareStatement(orderItemQuery)) {
@@ -354,7 +349,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             // Establish a connection to the database using the provided credentials
             try (Connection connection = DatabaseConnection.getConnection()) {
-                String query = DatabaseConnection.sqlGetOrders;
+                String query = DatabaseConnection.SQLGETORDERS;
 
                 // Create a prepared statement for executing the query
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -392,7 +387,7 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
 
             try (Connection connection = DatabaseConnection.getConnection()) {
                 // SQL query to retrieve order items for a specific order from the order_items table
-                String orderItemsQuery = DatabaseConnection.sqlGetOrderItems;
+                String orderItemsQuery = DatabaseConnection.SQLGETORDERITEMS;
 
                 try (PreparedStatement orderItemsStatement = connection.prepareStatement(orderItemsQuery)) {
                     // Set the orderId parameter in the SQL query
@@ -423,4 +418,18 @@ public class DatabaseBean implements Serializable, DatabaseOperations, DatabaseC
         return orderItems;
     }
 
+    // Methods that sort products by price on the home page
+    @Override
+    public void sortProductsByPrice() {
+        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice);
+
+        Collections.sort(products, byPrice);
+    }
+
+    @Override
+    public void sortProductsByPriceReverse() {
+        Comparator<ProductModel> byPrice = Comparator.comparingDouble(ProductModel::getPrice).reversed();
+
+        Collections.sort(products, byPrice);
+    }
 }

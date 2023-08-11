@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>        
+        <h:outputStylesheet name="css/custom-table.css" /> 
+        <h:outputStylesheet name="css/custom-text.css" />
+        <h:outputStylesheet name="css/custom-button.css"/> 
+        <h:outputStylesheet name="css/custom-dialog-text.css"/>
+        <h:outputStylesheet name="css/custom-dialog.css"/>
+        <h:outputStylesheet name="css/custom-icon-size.css"/>
+
+    </h:head>
+
+
+    <h:body>
+
+        <h:form id="myForm"> 
+
+
+
+            <p:growl id="messages" showDetail="true" /> 
+            <p:commandButton  icon="pi pi-arrow-left" action="#{routingBean.goBacktoPage()}"  style="color: black;background-color: #fff;border: #fff;"    />
+
+            <div class=" product-list-item  custom-empty-text ">
+
+                <p:graphicImage url="https://cdn.wallpapersafari.com/98/5/78E3Lg.jpg" alt="Resim Yok"  style="width:150px;height:100px;"/>
+
+                <p:commandButton    icon="pi pi-user-minus"   iconPos="right" styleClass="custom-icon-size" style="background-color:white;
+                                    color:black;
+                                    border: #fff;" update=":myForm" action="#{userBean.logout()}"   />
+                <p:badge style="margin-top: 5px" value="${userBean.cartProductsList.size()}">
+                    <p:commandButton  icon="pi pi-shopping-cart"  iconPos="right" styleClass="custom-icon-size" style="margin-left: 1380px;  background-color:white;
+                                      color:black;
+                                      border: #fff;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
+                </p:badge>
+                <p:commandButton    icon="pi pi-tags"  iconPos="right"  styleClass="custom-icon-size" style="margin-left: 10px;margin-bottom: 60px;  background-color:white;
+                                    color:black;
+                                    border: #fff;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
+            </div>
+
+
+            <p:carousel circular="true" paginator="false">
+                <p:tab>
+                    <div align="center">
+                        <h:outputText  value="TÜM YENİ ÇIKAN ÜRÜNLERİ İNCELE"  styleClass="custom-dialog-text" />
+                    </div>
+                </p:tab>
+                <p:tab>
+                    <div align="center">
+                        <h:outputText value="TÜRK İTHALAT MEVZUATI"  styleClass="custom-dialog-text" style="margin-right: 20px"/>
+                        <h:outputText  value="150 € üzeri siparişlerin teslimi garanti edilemiyor." style="margin-right: 20px"  />
+                        <h:outputText  value="Daha fazla bilgi" style="font-weight: bold"  />
+
+                    </div>
+                </p:tab>
+
+            </p:carousel>
+
+
+            <div style="display: flex;margin-left:  250px;margin-bottom: 50px;margin-top: 50px">
+                <div class="product-image image-shadow" style="margin-right: 50px">
+                    <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="No Image" style="border-radius: 10px;width: 570px;height: 640px"/>
+                </div>               
+                <div class="product-list-detail">
+                    <div class="product-info-left  custom-cart-text ">
+                        <h:outputText  style="font-weight: 700;font-size: 25px" value="#{databaseBean.selectedProduct.name.toUpperCase()}"/>
+                    </div>
+
+                    <div class="product-list-item p-5  custom-cart-text-desc">
+                        <i class="pi pi-tag" style="margin-right:10px;color: blue"></i>
+                        <h:outputText   style="font-weight: 700;font-size: 20px" value="#{databaseBean.selectedProduct.description}" />
+                    </div>
+
+                    <div class="product-info-left custom-cart-text-desc">
+                        <h:outputText  style="font-weight: 700;font-size: 25px" value="$#{databaseBean.selectedProduct.price}"/>
+                    </div>
+
+                    <div class="product-info-left custom-cart-text-desc"  style="margin-top: 10px" >
+                        <p:rating value="#{databaseBean.selectedProduct.rating}" readonly="true"/>
+                    </div>
+
+                    <div class="product-info-left  custom-cart-text-desc">
+                        <h:outputText  style="font-weight: 700;font-size: 20px" value="Shoes Description"/>
+                    </div>
+                    <div class="product-info-left custom-cart-text-desc"  style="width: 220px;margin-bottom:70px">
+                        <h:outputText  style="font-weight: 500;font-size:16px" value="İki kat swoosh, iki kat eğlence. Dayanıklı dikişli yüzeyler, sade bitirişler ve göz alıcı, dikkat çekici ayrıntılar gibi iyi bildiğin özellikleri yeniledik. Yan kısımdaki iki Swoosh logosu, markaya olan sevgini gösterir."/>
+                    </div>
+
+                    <div class="product-info-left custom-cart-text-desc"  style="width: 220px">
+                        <h:commandButton value="Sepete Ekle" actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" style="font-size:17px;background-color: black;color: white;border-radius: 30px;padding-bottom: 19px;padding-top:  19px;padding-right:  100px;padding-left: 100px" />
+                    </div> 
+                </div>
+            </div>
+
+
+
+
+            <div style="flex-direction: column;margin: 60px">
+
+                <div class="product-info-left  custom-cart-text "  style="margin: 40px">
+                    <h:outputText  style="font-weight: 700;font-size: 25px" value="Air Jordan 1 Low Ayakkabıyı keşfet"/>
+                </div>
+
+                <div  >
+                    <p:graphicImage url="https://static.nike.com/a/images/t_prod/w_1920,c_limit,f_auto,q_auto/c13d1043-18b0-4dc4-90ff-f343d130fe81/image.jpg" width="1620px" alt="No Image" />
+                </div> 
+                <div class="product-info-left  custom-cart-text " style="margin: 40px" >
+                    <h:outputText  style="font-weight: 700;font-size: 25px" value="Kapalı Air-Sole birimi hafif yastıklama sağlar."/>
+                </div>
+                <div class="product-image image-shadow" >
+                    <p:graphicImage url="https://static.nike.com/a/images/t_prod/w_1920,c_limit,f_auto,q_auto/f765eaec-c9f4-4485-a2a4-18b3645f8335/image.jpg" width="1620px" alt="No Image" />
+                </div>    
+            </div>
+
+
+        </h:form>
+
+    </h:body>
+</html>

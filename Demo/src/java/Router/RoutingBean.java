@@ -1,3 +1,5 @@
+package Router;
+
 
 import java.io.Serializable;
 import javax.faces.bean.ApplicationScoped;
@@ -19,6 +21,9 @@ public class RoutingBean implements Serializable {
 
     public String returnOrderPage() {
         return "order_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
+    }
+    public String returnProductPage() {
+        return "product_page.xhtml"; // After logging out, redirect to the login page (login_page.xhtml)
     }
 
     public String returnCartPage() {

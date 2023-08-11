@@ -1,5 +1,7 @@
-import com.example.OrderModel;
-import com.example.ProductModel;
+package Database;
+
+import Models.OrderModel;
+import Models.ProductModel;
 import java.sql.SQLException;
 import java.util.List;
 

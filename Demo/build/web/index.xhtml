@@ -73,9 +73,12 @@
                 </p:splitButton>
             </div>
 
-            <p:dataGrid    id="dtPersona"  value="#{databaseBean.product}" var="product"   style="margin-bottom:45px;border-radius: 10px;"  >  
+            <p:dataGrid    id="dtPersona"  value="#{databaseBean.products}" var="product"   style="margin-bottom:45px;border-radius: 10px;"  >  
                 <div style="margin:30px" >  
-                    <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 347px;height: 430px;border-radius: 10px "/>
+                    
+                    <h:commandLink actionListener="#{databaseBean.viewProduct(product)}"   >
+                        <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 347px;height: 430px;border-radius: 10px "/>
+                    </h:commandLink>
 
                     <div class="product-info-left  ">
                         <p:outputLabel  value="${product.name} "  style="font-weight: 500;font-size: 18px;color: black;"   />
@@ -84,7 +87,7 @@
                         <p:outputLabel value="${product.description}" style="font-weight: 400;font-size: 17px;color: grey;" />  
                     </div>
                     <div class="product-info-left" >
-                        <p:outputLabel value=" #{userBean.returnRandomNumber()}  Renk" style="font-weight: 400;font-size: 17px;color: grey;" />  
+                        <p:outputLabel value=" #{calculate.returnRandomNumber()}  Renk" style="font-weight: 400;font-size: 17px;color: grey;" />  
                     </div>
                     <div class="product-info-left"  style="margin-top: 10px" >
                         <p:rating value="#{product.rating}" readonly="true"/>
@@ -93,44 +96,8 @@
                         <p:outputLabel value="$${product.price} "  style="font-weight: 500;font-size: 18px;color: black"/>
                     </div>
 
-
-                    <div class="product-info-left ">
-
-                        <p:commandButton   icon="pi pi-align-justify" actionListener="#{databaseBean.viewProduct(product)}" update=":viewForm" oncomplete="PF('viewDialog').show()" style="color: black;margin-top:20px;margin-right: 15px;background-color: background; border-color: black"/>
-                        <p:commandButton  icon="pi pi-plus" actionListener="#{userBean.addCart(product)}"  update= ":myForm " style="color: black;margin:20px;background-color: background;border-color: black"/>
-                    </div>
                 </div>
             </p:dataGrid >  
-        </h:form>
-
-
-        <h:form id="viewForm"> 
-            <p:dialog id="dlgViewPersona" header="Ürün Detayları" widgetVar="viewDialog"  modal="true" width="540"  styleClass="custom-dialog" style="background-color: bisque;">
-
-                <p:growl id="msgs" showDetail="true" /> 
-                <p:messages />
-
-                <p:graphicImage value="#{databaseBean.selectedProduct.imagePath}" alt="Resim Yok" style="margin-left: 30px" width="380px" height="400"/>
-
-                <h:panelGrid columns="2" style="margin: 40px"  >
-                    <h:outputLabel for="viewName" value="Ürün Adı:" styleClass="custom-text"/>
-                    <h:outputText id="viewName" value="#{databaseBean.selectedProduct.name}"  styleClass="custom-dialog-text" />
-
-                    <h:outputLabel for="viewPrice" value="Fiyat:" styleClass="custom-text"/>
-                    <h:outputText id="viewPrice" value="$#{databaseBean.selectedProduct.price}" styleClass="custom-dialog-text"/>
-
-                    <h:outputLabel for="viewQuantity" value="Detaylar:" styleClass="custom-text"/>
-                    <h:outputText id="viewQuantity" value="#{databaseBean.selectedProduct.description}" styleClass="custom-dialog-text" />
-
-                    <h:outputLabel for="viewRating" value="Puan:"  styleClass="custom-text" />
-                    <p:rating value="#{databaseBean.selectedProduct.rating}" readonly="true"/>
-
-                </h:panelGrid>
-
-                <p:column>
-                    <p:commandButton value="Sepete Ekle"  icon="pi pi-plus" iconPos="right" style="margin-left: 130px;" update=":myForm"  actionListener="#{userBean.addCart(databaseBean.selectedProduct)}" styleClass="custom-button" />
-                </p:column>
-            </p:dialog>
         </h:form>
     </h:body>
 </html>
