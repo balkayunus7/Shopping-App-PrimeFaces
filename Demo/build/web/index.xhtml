@@ -20,20 +20,8 @@
         <h:form id="myForm"> 
             <p:growl id="messages" showDetail="true" /> 
 
-            <div class=" product-list-item  custom-empty-text ">
-                <p:graphicImage url="https://cdn.wallpapersafari.com/98/5/78E3Lg.jpg" alt="Resim Yok"  style="width:150px;height:100px;"/>
-
-                <p:commandButton    icon="pi pi-user-minus"   iconPos="right" styleClass="custom-icon-size" style="background-color:white;
-                                    color:black;
-                                    border: #fff;" update=":myForm" action="#{userBean.logout()}"   />
-                <p:badge style="margin-top: 5px" value="${userBean.cartProductsList.size()}">
-                    <p:commandButton  icon="pi pi-shopping-cart"  iconPos="right" styleClass="custom-icon-size" style="margin-left: 1380px;  background-color:white;
-                                      color:black;
-                                      border: #fff;" update=":myForm" action="#{routingBean.returnCartPage()}"   />   
-                </p:badge>
-                <p:commandButton    icon="pi pi-tags"  iconPos="right"  styleClass="custom-icon-size" style="margin-left: 10px;margin-bottom: 60px;  background-color:white;
-                                    color:black;
-                                    border: #fff;" update=":myForm" action="#{routingBean.returnOrderPage()}"   />     
+            <div class=" product-list-item  ">
+                <p:graphicImage value="/resources/images/logo.png" alt="Resim Yok"  style="width:250px;height:100px;"/>  
             </div>
 
             <p:carousel circular="true" paginator="false">
@@ -53,9 +41,7 @@
 
             </p:carousel>
 
-            <div >
-                <p:graphicImage value="/resources/images/main.png" alt="Resim Yok" width="1710" height="1000" style="margin-bottom: 70px"/>
-            </div>
+          
 
             <div  style="flex-direction: row"  >
 
@@ -76,10 +62,9 @@
             <p:dataGrid    id="dtPersona"  value="#{databaseBean.products}" var="product"   style="margin-bottom:45px;border-radius: 10px;"  >  
                 <div style="margin:30px" >  
                     
-                    <h:commandLink actionListener="#{databaseBean.viewProduct(product)}"   >
-                        <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 347px;height: 430px;border-radius: 10px "/>
-                    </h:commandLink>
-
+                    
+                    <p:graphicImage value="#{product.imagePath}" alt="Resim Yok"  style="width: 347px;height: 430px;border-radius: 10px "/>
+                   
                     <div class="product-info-left  ">
                         <p:outputLabel  value="${product.name} "  style="font-weight: 500;font-size: 18px;color: black;"   />
                     </div>

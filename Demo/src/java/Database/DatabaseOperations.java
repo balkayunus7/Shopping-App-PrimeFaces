@@ -1,6 +1,5 @@
 package Database;
 
-import Models.OrderModel;
 import Models.ProductModel;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +16,5 @@ public interface DatabaseOperations {
     void updateProductQuantity(String username, int productId, int newQuantity);
     int createOrder(String username, double total_price, int number) throws ClassNotFoundException, SQLException;
     void addOrderItem(int orderId, int productId, int quantity) throws ClassNotFoundException, SQLException;
-    List<OrderModel> getOrdersByUsername(String username);
     List<ProductModel> getOrderItemsForOrder(int orderId, int newQuantity) throws ClassNotFoundException;
 }
